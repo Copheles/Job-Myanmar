@@ -3,8 +3,8 @@ import axios from "axios";
 import { clearAlert, showAlert } from "../feedback/feedbackSlice";
 import { clearComments, clearJobInputFields, setFalseToJobEditingAndJobIdToNull} from "./jobSlice";
 
-const API_JOBS_URL = "https://jobmyanmar.onrender.com/api/v1/jobs";
-const API_COMMENTS_URL = 'https://jobmyanmar.onrender.com/api/v1/comments'
+const API_JOBS_URL = "/api/v1/jobs";
+const API_COMMENTS_URL = '/api/v1/comments'
 
 export const createJob = createAsyncThunk(
   "job/add",

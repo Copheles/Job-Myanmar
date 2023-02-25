@@ -72,7 +72,6 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-
   const user = await User.findOne({ _id : req.user.userId})
 
   checkPermissions(req.user, user._id)

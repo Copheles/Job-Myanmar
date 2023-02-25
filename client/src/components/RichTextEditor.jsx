@@ -51,7 +51,6 @@ const config = {
   },
   style: {
     paddingLeft: "30px",
-    background: "#2D3748",
   },
 };
 
