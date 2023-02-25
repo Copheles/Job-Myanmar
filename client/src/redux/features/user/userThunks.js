@@ -3,7 +3,7 @@ import axios from "axios";
 import { showAlert, clearAlert } from "../feedback/feedbackSlice";
 import { logoutUser } from "./userSlice";
 
-const API_URL = "/api/v1/auth/";
+const API_URL = "https://jobmyanmar.onrender.com/api/v1/auth/";
 
 export const loginUser = createAsyncThunk(
   "user/login",
