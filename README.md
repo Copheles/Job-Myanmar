@@ -61,10 +61,6 @@ Fully Featured Job Website with comment replies system implementing infinite tre
 ![commentOptions](https://user-images.githubusercontent.com/61428497/221340987-8cd6c5bf-e6a3-4e4a-8bc9-661b5e2da314.png)
 ![CommentAdding](https://user-images.githubusercontent.com/61428497/221341010-c292c5ee-c975-453b-b01a-69310ffcd862.png)
 
-##### Profile Page
-![profilepage](https://user-images.githubusercontent.com/61428497/221341033-3d2b6bc6-62b9-4681-8f45-948795e9f369.png)
-
-
 ### TODO
 
 - email verification
