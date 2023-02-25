@@ -26,7 +26,7 @@ Fully Featured Job Website with comment replies system implementing infinite tre
 - User (CRUD)
 - Logout system
 - Displaying related jobs
-- Comment replies system with infinite nested datastructure
+- Comment replies system 
 - Comment (CRUD)
 
 ### Demo
