@@ -78,7 +78,7 @@ const JobCard = ({ job }) => {
               color="white"
               size={{ base: "sm", md: "md" }}
             />
-            <Box>
+            <Box px={{ base: 2, md: 0}}>
               <Text>{company}</Text>
             </Box>
           </Flex>
@@ -98,7 +98,7 @@ const JobCard = ({ job }) => {
           <IconDesign label={jobLocation} icon={<FaLocationArrow />} />
           <IconDesign label={jobType} icon={<FaBriefcase />} />
         </SimpleGrid>
-        <SimpleGrid columns={{ base: 1, sm: 2 }} gap={{ base: 4, md: 0 }} mt={{ base: 2, md: 0}}>
+        <SimpleGrid columns={{ base: 1, sm: 2 }} gap={{ base: 4, md: 0 }} mt={{ base: 3, md: 0}}>
           <IconDesign label={status} icon={statusIcon} />
         </SimpleGrid>
       </CardBody>

@@ -48,15 +48,15 @@ const SearchContainer = () => {
 
   return (
     <Box
-      px={8}
-      py={4}
+      px={{ base: 2, md: 8}}
+      py={{ base: 3, md: 4}}
       w="full"
       bg={useColorModeValue("white", "gray.700")}
       mb={10}
       border
       borderRadius="10px"
     >
-      <Flex alignItems="center" gap={4} as='form' onSubmit={searchJobs}>
+      <Flex alignItems="center" gap={{base: 5, md: 6}} as='form' onSubmit={searchJobs}>
         <FormRow
           icon={<Search2Icon />}
           type="text"
@@ -66,7 +66,7 @@ const SearchContainer = () => {
           value={search}
           handleChange={handleSearch}
         />
-        <Button mb={3} type='submit' colorScheme="red" >
+        <Button mb={3} size={{base: 'sm', md: 'md'}} type='submit' colorScheme="red" >
           Search
         </Button>
       </Flex>

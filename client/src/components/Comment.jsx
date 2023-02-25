@@ -162,7 +162,7 @@ const Comment = ({
       {currentActiveReply?.isShowReplyArea && currentActiveReply.id === _id && (
         <Box mt={2}>
           {isReplyAlert && <AlertPopUp {...replyAlertDetails} />}
-          <FormTextArea value={replyContent} handleChange={handleChange} />
+          <FormTextArea value={replyContent}  handleChange={handleChange} />
           <Button
             mb={3}
             mt={3}
