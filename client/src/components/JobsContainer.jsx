@@ -23,7 +23,7 @@ const JobsContainer = () => {
     sort,
     searchText,
     numOfPages,
-    totalJobs
+    totalJobs,
   } = useSelector((state) => state.job);
 
   console.log(numOfPages);
@@ -54,9 +54,11 @@ const JobsContainer = () => {
         <Heading textAlign="center">No jobs to display</Heading>
       ) : (
         <>
-          <Heading mb={5} fontSize={{ base: "15px", md: "20px" }}>{totalJobs} {totalJobs === 1 ? 'Job' : 'Jobs' } Found</Heading>
+          <Heading mb={5} fontSize={{ base: "15px", md: "20px" }}>
+            {totalJobs} {totalJobs === 1 ? "Job" : "Jobs"} Found
+          </Heading>
           <SimpleGrid columns={{ base: 1, lg: 2 }} gap={5}>
-            {jobs.map((job) => (
+            {jobs?.map((job) => (
               <JobCard job={job} key={job._id} />
             ))}
           </SimpleGrid>
