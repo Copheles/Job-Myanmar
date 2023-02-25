@@ -5,6 +5,7 @@ Fully Featured Job Website with comment replies system implementing infinite tre
 ### Development Stack
 
 - React Front-End
+- State management with Redux
 - Chakra-Ui
 - Node js 
 - Express Js
