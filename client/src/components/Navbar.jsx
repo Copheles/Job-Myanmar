@@ -17,7 +17,7 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/features/user/userSlice";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ toggleSidebar }) => {
   const toggleIcon = useColorModeValue("red.500", "red.200");
@@ -56,35 +56,28 @@ const Navbar = ({ toggleSidebar }) => {
         Post your job to attract skilled talents...
       </Text>
       <Text fontWeight="200" display={{ base: "block", md: "none" }}>
-        Fresh Jobs in Myanmar
+        Jobs in Myanmar
       </Text>
 
       <Menu>
-        <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+        <MenuButton
+          size={{ base: "sm", lg: "md" }}
+          as={Button}
+          rightIcon={<ChevronDownIcon mb={1} />}
+        >
           <Avatar size="xs" mr={2} /> {name}
         </MenuButton>
         <MenuList>
-        <MenuItem minH="40px">
-            <Flex
-              justifyContent="space-between"
-              alignItems="center"
-              gap={5}
-              onClick={() => navigate('/profile')}
-            >
+          <MenuItem minH="10px" onClick={() => navigate("/profile")}>
+            <Flex justifyContent="space-between" alignItems="center" gap={3}>
               <FaUserCircle size={20} /> Profile
             </Flex>
           </MenuItem>
-          <MenuItem minH="48px">
-            <Flex
-              justifyContent="space-between"
-              alignItems="center"
-              gap={5}
-              onClick={handleLogout}
-            >
+          <MenuItem minH="10px" onClick={handleLogout}>
+            <Flex justifyContent="space-between" alignItems="center" gap={3}>
               <BiLogOutCircle size={20} /> Logout
             </Flex>
           </MenuItem>
-
         </MenuList>
       </Menu>
     </Box>

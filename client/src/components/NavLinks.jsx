@@ -19,6 +19,7 @@ const NavLinks = () => {
             gap={3}
             alignItems="center"
             fontSize={{ base: 25, md: 20}}
+            my={{ base: 5, md: 0}}
             sx={{ fontWeight: 'lighter'}}
             _hover={{ marginLeft: '8px', transition: "0.3s ease-in-out all"}}
             _activeLink={{ color: `${color}`}}

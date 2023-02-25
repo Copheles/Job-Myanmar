@@ -24,7 +24,7 @@ const config = {
   minHeight: 400,
   minWidth: null,
   buttons:
-    "paragraph,bold,strikethrough,underline,italic,|,superscript,subscript,|,ul,ol,|,fontsize,|,align,undo,redo",
+    "paragraph,bold,strikethrough,underline,italic,|,superscript,subscript,|,ul,ol,|,fontsize,preview,align,undo,redo",
   editorCssClass: "alic",
   placeHolder: "",
   controls: {

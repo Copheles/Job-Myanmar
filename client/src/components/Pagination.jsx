@@ -50,21 +50,21 @@ const Pagination = () => {
       <Heading fontWeight="thin" fontSize={{ base: "18px", lg: "20px" }}>
         {page} of {numOfPages} pages
       </Heading>
-      <Flex gap={2} mt={5}>
+      <Flex gap={2} mt={5} alignItems='center'>
         <IconButton
           colorScheme="red"
           icon={<BiSkipPrevious size={30} />}
           onClick={prevPage}
-          size={{ base: "xs", sm: "sm", lg: "md" }}
+          size={{base: 'xs', lg: 'md'}}
         />
-        <Button size={{ base: "xs", sm: "sm", lg: "md" }}>{page}</Button>
+        <Button size={{base: 'sm', lg: 'md'}}>{page}</Button>
         <IconButton
           colorScheme="red"
           icon={<BiSkipNext size={30} />}
           onClick={nextPage}
-          size={{ base: "xs", sm: "sm", lg: "md" }}
+          size={{base: 'xs', lg: 'md'}}
         />
-        <Flex>
+        <Flex alignItems='center'>
           <Input
             type="number"
             w="100px"
@@ -75,14 +75,14 @@ const Pagination = () => {
             onKeyDown={(e) =>
               invalidInput.includes(e.key) && e.preventDefault()
             }
-            size={{ base: "xs", sm: "sm", lg: "md" }}
+            size={{base: 'sm', lg: 'md'}}
             onChange={(e) => setInputPage(e.target.value)}
           />
           <Button
             mx={2}
-            size={{ base: "xs", sm: "sm", lg: "md" }}
             colorScheme="red"
             onClick={GotoPage}
+            size={{base: 'sm', lg: 'md'}}
           >
             Go to
           </Button>

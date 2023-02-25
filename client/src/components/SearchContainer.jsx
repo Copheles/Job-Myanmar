@@ -62,7 +62,7 @@ const SearchContainer = () => {
           type="text"
           name='search'
           labelText=' '
-          placeholder="Job title or company"
+          placeholder="Search"
           value={search}
           handleChange={handleSearch}
         />
@@ -71,11 +71,10 @@ const SearchContainer = () => {
         </Button>
       </Flex>
       <Flex
-        alignItems="center"
         justifyContent="space-between"
         flexDirection={{ base: "column", md: "row" }}
       >
-        <SimpleGrid columns={3} gap={{ base: 2, md: 4, lg: 6 }}>
+        <SimpleGrid columns={{ base: 1, md: 3}} gap={{ base: 2, md: 4, lg: 6 }}>
           <SelectField
             value={searchStatus}
             name="searchStatus"

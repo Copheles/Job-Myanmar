@@ -12,7 +12,6 @@ import {
   CardHeader,
   Flex,
   Heading,
-
   SimpleGrid,
   Text,
   useColorModeValue as mode,
@@ -21,7 +20,7 @@ import { FaBriefcase, FaLocationArrow } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import IconDesign from "./IconDesign";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const JobCard = ({ job }) => {
   const {
@@ -34,8 +33,7 @@ const JobCard = ({ job }) => {
     jobType,
     _id: jobId,
   } = job;
-  const {name: username} = useSelector((state) => state.user.user)
-
+  const { name: username } = useSelector((state) => state.user.user);
 
   const fromNow = moment(createdAt).fromNow();
 
@@ -73,34 +71,34 @@ const JobCard = ({ job }) => {
     >
       <CardHeader>
         <Flex justifyContent="space-between" alignItems="center">
-          <Flex gap={3} >
+          <Flex gap={3} alignItems='center'>
             <Avatar
               name={company}
               bg={mode("red.500", "red.200")}
               color="white"
+              size={{ base: "sm", md: "md" }}
             />
             <Box>
-              <Heading size="sm">{position}</Heading>
               <Text>{company}</Text>
             </Box>
           </Flex>
           <Text color={mode("gray.500", "gray.500")}>{fromNow}</Text>
         </Flex>
       </CardHeader>
-      <Flex ml={10} alignItems="center">
-        <Text color={mode("gray.500", "gray.500")}>Posted by {name === username ? <Badge colorScheme='green'>you</Badge>: name}</Text>
+
+      <Flex ml={5} alignItems="center" display='column'>
+        <Heading size={{ base: 'xs', md: 'sm'}}>{position}</Heading>
+        <Text color={mode("gray.500", "gray.500")} mt={3}>
+          Posted by{" "}
+          {name === username ? <Badge colorScheme="green">you</Badge> : name}
+        </Text>
       </Flex>
-      <CardBody
-        display="flex"
-        flexDir="column"
-        gap={{ base: 3, md: 8 }}
-        
-      >
+      <CardBody display="flex" flexDir="column" gap={{ base: 3, md: 8 }}>
         <SimpleGrid columns={{ base: 1, sm: 2 }} gap={{ base: 4, md: 0 }}>
           <IconDesign label={jobLocation} icon={<FaLocationArrow />} />
           <IconDesign label={jobType} icon={<FaBriefcase />} />
         </SimpleGrid>
-        <SimpleGrid columns={{ base: 1, sm: 2 }} gap={{ base: 4, md: 0 }}>
+        <SimpleGrid columns={{ base: 1, sm: 2 }} gap={{ base: 4, md: 0 }} mt={{ base: 2, md: 0}}>
           <IconDesign label={status} icon={statusIcon} />
         </SimpleGrid>
       </CardBody>

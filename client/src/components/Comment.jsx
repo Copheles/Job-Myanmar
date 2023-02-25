@@ -105,7 +105,7 @@ const Comment = ({
   };
 
   return (
-    <Box my={4} gap={5} ml={ml + 3}>
+    <Box my={4} gap={5} ml={{ base: `${ml + 1}`, md: `${ml+2}`}} fontSize={{ base: '10px', sm: '13px', md: '15px', lg: '17px'}}>
       <Flex justifyContent="space-between">
         <Flex alignItems="center">
           <Avatar size="sm" mr={5} />
@@ -186,7 +186,7 @@ const Comment = ({
             currentActiveReply={currentActiveReply}
             setCurrenActiveReply={setCurrenActiveReply}
             job={job}
-            ml={ml + 3}
+            ml={ml + 2}
           />
         ))}
     </Box>
