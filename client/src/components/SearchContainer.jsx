@@ -66,7 +66,7 @@ const SearchContainer = () => {
           value={search}
           handleChange={handleSearch}
         />
-        <Button mb={3} size={{base: 'sm', md: 'md'}} type='submit' colorScheme="red" >
+        <Button mb={3} size={{base: 'sm', md: 'md'}} type='submit' colorScheme="red" w={{ base: 20, lg: 'full'}}>
           Search
         </Button>
       </Flex>

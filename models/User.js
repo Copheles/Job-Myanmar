@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema({
     maxlength: 20,
     default: 'Yangon'
   }
-}) 
+}, {timestamps: true}) 
 UserSchema.pre('save', async function(){
   // console.log(this.modifiedPaths());
   // console.log(this.isModified('name'));

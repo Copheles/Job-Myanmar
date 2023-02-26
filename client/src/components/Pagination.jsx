@@ -53,13 +53,15 @@ const Pagination = () => {
       <Flex gap={2} mt={5} alignItems='center'>
         <IconButton
           colorScheme="red"
+          variant='outline'
           icon={<BiSkipPrevious size={30} />}
           onClick={prevPage}
           size={{base: 'xs', lg: 'md'}}
         />
-        <Button size={{base: 'sm', lg: 'md'}}>{page}</Button>
+        <Button colorScheme='red' size={{base: 'sm', lg: 'md'}}>{page}</Button>
         <IconButton
           colorScheme="red"
+          variant='outline'
           icon={<BiSkipNext size={30} />}
           onClick={nextPage}
           size={{base: 'xs', lg: 'md'}}

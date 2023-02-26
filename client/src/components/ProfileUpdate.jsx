@@ -1,19 +1,34 @@
-import { Button, SimpleGrid } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  SimpleGrid,
+  useColorModeValue as mode,
+} from "@chakra-ui/react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleChangeInputUser } from "../redux/features/user/userSlice";
-import { clearAlert, showAlert } from "../redux/features/feedback/feedbackSlice";
+import {
+  clearAlert,
+  showAlert,
+} from "../redux/features/feedback/feedbackSlice";
 import { updateUser } from "../redux/features/user/userThunks";
-import FormRow from './FormRow';
-import AlertPopUp from './AlertPopUp';
+import FormRow from "./FormRow";
+import AlertPopUp from "./AlertPopUp";
 import { FaLocationArrow, FaUserAlt } from "react-icons/fa";
 import { EmailIcon } from "@chakra-ui/icons";
+import { Text } from "html-react-parser";
+import moment from "moment";
 
 const ProfileUpdate = () => {
-
   const { isShowAlert, alertDetails } = useSelector((state) => state.feedback);
   const { user } = useSelector((state) => state.user);
-  const {  name, email, location } = user;
+  const { jobsBySingleUser } = useSelector((state) => state.job);
+  const { _id, name, email, location, createdAt } = user;
+  const date = moment(createdAt).format("MMM Do, YYYY");
 
   const dispatch = useDispatch();
 
@@ -29,7 +44,6 @@ const ProfileUpdate = () => {
       setTimeout(() => {
         dispatch(clearAlert());
       }, 3000);
-      
     } else {
       dispatch(updateUser({ name, email, location }));
     }
@@ -41,9 +55,35 @@ const ProfileUpdate = () => {
   };
 
   return (
-    <>
+    <Flex
+      justifyContent={{ base: 'center', lg: 'flex-start'}}
+      flexDir={{ base: "column", lg: "row" }}
+      py={{ base: 3, lg: 10}}
+      maxW='5xl'
+    >
       {isShowAlert && <AlertPopUp {...alertDetails} />}
-      <SimpleGrid mt={10} columns={{ base: 1, md: 2 }} gap={3}>
+
+      <Flex
+        flexDirection="column"
+        px={{ base: 10, lg: 2 }}
+        w={{ base: "100%", lg: "30%" }}
+        mb={{ base: 10, lg: 0 }}
+      >
+        <Box textAlign="center" mb={5}>
+          <Avatar size="lg" alignItems="center" mb={5} />
+          <Heading textAlign="center" fontSize={{ base: "24px" }} mb={3}>
+            {name}
+          </Heading>
+          <Heading
+            fontSize={{ base: "14px" }}
+            textAlign="center"
+            color={mode("gray.500", "gray.500")}
+          >
+            Joined on {date}
+          </Heading>
+        </Box>
+      </Flex>
+      <SimpleGrid columns={{ base: 1, md: 2 }} gap={3} mb={{ base: 5, lg: 0}} flex={1}>
         <FormRow
           type="text"
           name="name"
@@ -79,7 +119,7 @@ const ProfileUpdate = () => {
           Save Changes
         </Button>
       </SimpleGrid>
-    </>
+    </Flex>
   );
 };
 
