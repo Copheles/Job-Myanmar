@@ -88,9 +88,7 @@ const jobSlice = createSlice({
       state.page = payload
     },
     editingJob: (state, { payload }) => {
-      const jobs = state.jobs;
-      const index = jobs.findIndex((job) => payload === job._id);
-      const job = current(jobs[index]);
+      const job = payload;
       const {
         _id,
         position,

@@ -44,18 +44,19 @@ const JobDetails = () => {
   const dispatch = useDispatch();
 
   const {
-    job: {
-      company,
-      position,
-      jobLocation,
-      jobDescription,
-      createdAt,
-      createdBy: jobOwner,
-      status,
-      jobType,
-    },
+    job,
     comments,
   } = useSelector((state) => state.job.singleJob);
+  const {
+    company,
+    position,
+    jobLocation,
+    jobDescription,
+    createdAt,
+    createdBy: jobOwner,
+    status,
+    jobType,
+  } = job;
   const { _id: userId } = useSelector((state) => state.user.user);
   const { isLoading } = useSelector((state) => state.job);
   const date = moment(createdAt).format("MMM Do, YYYY");
@@ -84,7 +85,8 @@ const JobDetails = () => {
     navigate("/");
   };
   const handleEdit = () => {
-    dispatch(editingJob(id));
+    console.log(job)
+    dispatch(editingJob(job));
     navigate("/add-job");
   };
 

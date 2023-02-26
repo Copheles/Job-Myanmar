@@ -79,7 +79,6 @@ export const getSingleJob = createAsyncThunk('job/getSingleJob', async( id, thun
         'Authorization': `Bearer ${token}`
       }
     });
-    console.log('getsinglejob')
 
     return response.data;
   } catch (error) {
@@ -132,7 +131,6 @@ export const getRelatedJobs = createAsyncThunk('job/relatedJobs', async( id, thu
         'Authorization': `Bearer ${token}`
       }
     });
-    console.log(response.data)
 
     return response.data;
   } catch (error) {
