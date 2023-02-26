@@ -174,8 +174,8 @@ const JobDetails = () => {
           </Heading>
           <Flex
             gap={5}
-            mt={10}
-            mb={10}
+            mt={{base: 10, md: 12}}
+            mb={{ base: 10, md: 12}}
             direction={{ base: "column", md: "row" }}
           >
             <IconDesign label={jobLocation} icon={<FaLocationArrow />} />
