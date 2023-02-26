@@ -135,6 +135,7 @@ const RegisterPage = () => {
           handleChange={handleChange}
           labelText="Password"
           icon={<LockIcon />}
+          isPassword={true}
         />
         {isLoading && <Progress mt={1} siz='xs' w='full' isIndeterminate colorScheme="red" hasStripe />}
         <Button colorScheme="red" type="submit" isDisabled={isLoading}>

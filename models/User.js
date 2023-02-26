@@ -1,3 +1,4 @@
+
 import mongoose from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcryptjs'
@@ -26,7 +27,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide password'],
     minlength: 6,
-    select: false
   },
   lastName: {
     type: String,
@@ -70,6 +70,7 @@ UserSchema.methods.createJWT = function () {
 }
 
 UserSchema.methods.comparePassword = async function(candidatePassword) {
+  console.log(this.password)
   const isMatch = await bcrypt.compare(candidatePassword, this.password)
   return isMatch
 }

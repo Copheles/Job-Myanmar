@@ -29,6 +29,9 @@ const userSlice = createSlice({
       const { name, value } = payload;
       state.user[name] = value;
     },
+    setUserInfoToNormalInUpdateFail: (state, { payload} ) => {
+      state.user = payload
+    },
     changeMode: (state) => {
       state.mode = state.mode === "dark" ? "light" : "dark";
     },
@@ -78,7 +81,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { changeMode, logoutUser, handleChangeInputUser } =
+export const { changeMode, logoutUser, handleChangeInputUser, setUserInfoToNormalInUpdateFail } =
   userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { showAlert, clearAlert } from "../feedback/feedbackSlice";
-import { logoutUser } from "./userSlice";
+import { logoutUser, setUserInfoToNormalInUpdateFail } from "./userSlice";
 
 const API_URL = "/api/v1/auth/";
 
@@ -68,6 +68,7 @@ export const updateUser = createAsyncThunk(
       thunkAPI.dispatch(
         showAlert({ status: "success", description: "User Updated" })
       );
+      
       return resposne.data;
     } catch (error) {
       console.log(error);
@@ -78,6 +79,7 @@ export const updateUser = createAsyncThunk(
         error.message ||
         error.toString();
       thunkAPI.dispatch(showAlert({ status: "error", description: message }));
+      thunkAPI.dispatch(setUserInfoToNormalInUpdateFail(JSON.parse(localStorage.getItem('user'))))
       return thunkAPI.rejectWithValue();
     } finally {
       setTimeout(() => {
@@ -97,7 +99,7 @@ export const deleteUser = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      thunkAPI.dispatch(logoutUser())
+      thunkAPI.dispatch(logoutUser());
 
       return resposne.data;
     } catch (error) {
@@ -114,6 +116,39 @@ export const deleteUser = createAsyncThunk(
       }, 3000);
       return thunkAPI.rejectWithValue();
     } finally {
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "user/changePassword",
+  async (changePasswordData, thunkAPI) => {
+    const token = localStorage.getItem("token");
+    try {
+      const resposne = await axios.patch(API_URL + "changePassword", changePasswordData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      thunkAPI.dispatch(
+        showAlert({ status: "success", description: "Password Updated" })
+      );
+      return resposne.data;
+    } catch (error) {
+      console.log(error);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(showAlert({ status: "error", description: message }));
+      return thunkAPI.rejectWithValue();
+    } finally {
+      setTimeout(() => {
+        thunkAPI.dispatch(clearAlert());
+      }, 3000);
     }
   }
 );

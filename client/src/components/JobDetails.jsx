@@ -154,11 +154,13 @@ const JobDetails = () => {
               <Flex>
                 <IconButton
                   variant="ghost"
+                  colorScheme='red'
                   icon={<DeleteIcon />}
                   onClick={onOpen}
                 />
                 <IconButton
                   variant="ghost"
+                  colorScheme='yellow'
                   icon={<EditIcon />}
                   onClick={handleEdit}
                 />
