@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   createComment,
   createJob,
@@ -8,6 +8,7 @@ import {
   getJobsByUser,
   getRelatedJobs,
   getSingleJob,
+  getStats,
   updateComment,
 } from "./jobThunks";
 
@@ -25,6 +26,8 @@ const initialState = {
     },
     comments: [],
   },
+  stats: {},
+  monthlyApplication: [],
   jobsBySingleUser: [],
   relatedJobs: [],
   isJobEditing: false,
@@ -62,8 +65,8 @@ const jobSlice = createSlice({
       state.page = 1;
       state[name] = value;
     },
-    clearComments:(state) => {
-      state.singleJob.comments = []
+    clearComments: (state) => {
+      state.singleJob.comments = [];
     },
     handleChangeFilterInput: (state, { payload }) => {
       const { name, value } = payload;
@@ -71,21 +74,20 @@ const jobSlice = createSlice({
       state[name] = value;
     },
     searching: (state, { payload }) => {
-      state.searchText = payload
+      state.searchText = payload;
     },
     clearFilter: (state) => {
-      state.search = ''
-      state.searchStatus ='all'
-      state.searchType = 'all'
-      state.sort = 'latest'
+      state.search = "";
+      state.searchStatus = "all";
+      state.searchType = "all";
+      state.sort = "latest";
     },
     changeJobDescription: (state, { payload }) => {
       state.jobDescription = payload;
       state.page = 1;
     },
-    changePage: (state, { payload}) => {
-      
-      state.page = payload
+    changePage: (state, { payload }) => {
+      state.page = payload;
     },
     editingJob: (state, { payload }) => {
       const job = payload;
@@ -214,6 +216,20 @@ const jobSlice = createSlice({
       state.isLoading = false;
     });
 
+    // get stats
+
+    builder.addCase(getStats.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getStats.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.stats = payload.defaultStats;
+      state.monthlyApplication = payload.monthlyApplication;
+    });
+    builder.addCase(getStats.rejected, (state) => {
+      state.isLoading = false;
+    });
+
     // create comment
     builder.addCase(createComment.pending, (state) => {
       state.isCommentLoading = true;
@@ -280,18 +296,18 @@ const jobSlice = createSlice({
     builder.addCase(updateComment.fulfilled, (state, { payload }) => {
       state.isCommentLoading = false;
       const comments = state.singleJob.comments;
-      const findComments = (comments) =>{
-        for(let i = 0; i < comments.length; i++){
+      const findComments = (comments) => {
+        for (let i = 0; i < comments.length; i++) {
           let comment = comments[i];
-          if(comment._id === payload.comment._id){
-            Object.assign(comment, payload.comment )
-            break
-          }else{
-            findComments(comment.replies)
+          if (comment._id === payload.comment._id) {
+            Object.assign(comment, payload.comment);
+            break;
+          } else {
+            findComments(comment.replies);
           }
         }
-      }
-      findComments(comments)
+      };
+      findComments(comments);
       // const index = comments.findIndex(
       //   (comment) => payload.comment._id === comment._id
       // );
@@ -314,7 +330,7 @@ export const {
   changePage,
   clearFilter,
   handleChangeFilterInput,
-  searching
+  searching,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

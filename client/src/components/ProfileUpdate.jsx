@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  Divider,
   Flex,
   Heading,
   SimpleGrid,
@@ -20,14 +19,12 @@ import FormRow from "./FormRow";
 import AlertPopUp from "./AlertPopUp";
 import { FaLocationArrow, FaUserAlt } from "react-icons/fa";
 import { EmailIcon } from "@chakra-ui/icons";
-import { Text } from "html-react-parser";
 import moment from "moment";
 
 const ProfileUpdate = () => {
   const { isShowAlert, alertDetails } = useSelector((state) => state.feedback);
   const { user } = useSelector((state) => state.user);
-  const { jobsBySingleUser } = useSelector((state) => state.job);
-  const { _id, name, email, location, createdAt } = user;
+  const { name, email, location, createdAt } = user;
   const date = moment(createdAt).format("MMM Do, YYYY");
 
   const dispatch = useDispatch();

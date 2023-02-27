@@ -122,6 +122,32 @@ export const getJobsByUser = createAsyncThunk('job/getjobbyuser', async( id, thu
   }
 })
 
+export const getStats = createAsyncThunk('job/getStats', async( _, thunkAPI) => {
+  const token = localStorage.getItem('token')
+  try {
+    const response = await axios( `${API_JOBS_URL}/stats`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    
+    return response.data;
+  } catch (error) {
+    const message =
+    (error.response &&
+      error.response.data &&
+      error.response.data.message) ||
+    error.message ||
+    error.toString();
+
+  return thunkAPI.rejectWithValue(message);
+  }finally {
+
+  }
+})
+
+
+
 
 export const getRelatedJobs = createAsyncThunk('job/relatedJobs', async( id, thunkAPI) => {
   const token = localStorage.getItem('token')

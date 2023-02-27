@@ -6,6 +6,7 @@ dotenv.config()
 import 'express-async-errors'
 import morgan from 'morgan'
 import path from 'path'
+import mongoose from 'mongoose'
 
 // db and authenticateUser
 import connectDB from './db/connect.js'
@@ -20,6 +21,8 @@ import notFoundMiddleware from './middleware/not-found.js'
 import errorHandlerMiddleware from './middleware/error-handler.js'
 import authenticatedUser from './middleware/auth.js'
 import cors from 'cors'
+
+mongoose.set('strictQuery', false)
 
 if(process.env.NODE_ENV !== 'production'){
   app.use(morgan('dev'))

@@ -1,7 +1,7 @@
 
 import { MdQueryStats } from 'react-icons/md'
 import { FaWpforms } from 'react-icons/fa'
-import { ImProfile } from 'react-icons/im'
+import { ImProfile, ImStatsBars } from 'react-icons/im'
 
 
 const links = [
@@ -14,12 +14,19 @@ const links = [
   },
   {
     id: 2,
+    text: 'stats',
+    path: 'stats',
+    icon: <ImStatsBars />
+  },
+  {
+    id: 3,
     text: 'add job',
     path: 'add-job',
     icon: <FaWpforms />,
   },
+  
   {
-    id: 3,
+    id: 4,
     text: 'profile',
     path: 'profile',
     icon: <ImProfile />,

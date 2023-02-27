@@ -5,6 +5,7 @@ import AllJobs from "./pages/main/AllJobs";
 import Job from "./pages/main/Job";
 import Profile from "./pages/main/Profile";
 import ShareLayout from "./pages/main/ShareLayout";
+import Stats from "./pages/main/Stats";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import RegisterPage from "./pages/RegisterPage";
@@ -23,6 +24,7 @@ function App() {
         >
           <Route index element={<AllJobs />} />
           <Route path="add-job" element={<AddJob />} />
+          <Route path="stats" element={<Stats />} />
           <Route path="profile" element={<Profile />} />
           <Route path="job/:id" element={<Job />} />
         </Route>
