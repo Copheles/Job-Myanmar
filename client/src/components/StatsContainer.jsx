@@ -36,7 +36,7 @@ const StatsContainer = () => {
       <SimpleGrid
         columns={{ base: 1, xl: 3}}   
         gap={10}
-        px={{ base: 2, lg: 10 }}
+        px={{ base: 8, lg: 10 }}
         py={{ base: 5, lg: 20 }}
       >
         {defaultStats.map((item, index) => {

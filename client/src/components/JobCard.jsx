@@ -75,7 +75,7 @@ const JobCard = ({ job }) => {
             <Avatar
               name={company}
               bg={mode("red.500", "red.200")}
-              color="white"
+              color={mode('gray.100', 'teal.50')}
               size={{ base: "sm", md: "md" }}
             />
             <Box px={{ base: 2, md: 0}}>
