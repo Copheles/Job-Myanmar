@@ -28,7 +28,6 @@ const SearchContainer = () => {
     sort,
     search,
     isLoading,
-    status
   } = useSelector((state) => state.job);
 
   const dispatch = useDispatch();

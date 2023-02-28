@@ -12,7 +12,8 @@ const Stats = () => {
   const { isLoading, monthlyApplication } = useSelector((state) => state.job)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getStats())
+
+      dispatch(getStats())
   }, [dispatch])
 
   return (
