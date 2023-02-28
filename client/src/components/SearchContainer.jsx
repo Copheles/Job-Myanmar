@@ -3,7 +3,7 @@ import {
   Button,
   Flex,
   SimpleGrid,
-  useColorModeValue,
+  useColorModeValue as mode,
 } from "@chakra-ui/react";
 import React from "react";
 import FormRow from "./FormRow";
@@ -16,6 +16,8 @@ import {
   searching,
 } from "../redux/features/job/jobSlice";
 
+import { CgSortAz } from 'react-icons/cg'
+
 const SearchContainer = () => {
   const {
     statusOptions,
@@ -26,6 +28,7 @@ const SearchContainer = () => {
     sort,
     search,
     isLoading,
+    status
   } = useSelector((state) => state.job);
 
   const dispatch = useDispatch();
@@ -51,7 +54,7 @@ const SearchContainer = () => {
       px={{ base: 2, md: 8}}
       py={{ base: 3, md: 4}}
       w="full"
-      bg={useColorModeValue("white", "gray.700")}
+      bg={mode("white", "gray.700")}
       mb={10}
       border
       borderRadius="10px"
@@ -72,7 +75,7 @@ const SearchContainer = () => {
       </Flex>
       <Flex
         justifyContent="space-between"
-        flexDirection={{ base: "column", md: "row" }}
+        flexDirection={{ base: "column" }}
       >
         <SimpleGrid columns={{ base: 1, md: 3}} gap={{ base: 2, md: 4, lg: 6 }}>
           <SelectField
@@ -95,6 +98,7 @@ const SearchContainer = () => {
             handleChange={handleSearch}
             labelText="sort"
             options={sortOptions}
+            icon={<CgSortAz />}
           />
         </SimpleGrid>
         <Button

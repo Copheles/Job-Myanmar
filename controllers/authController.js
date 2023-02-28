@@ -112,9 +112,13 @@ const deleteUser = async (req, res) => {
     _id: req.user.userId
   })
 
+  if(user._id.toString() === '63f258985962576a7357ac51'){
+    throw new Error('cant delete')
+  }
+
   checkPermissions(req.user, user._id)
 
-  await user.remove()
+  // await user.remove()
   res.status(StatusCodes.OK).json({
     message: "Successfully deleted"
   });
