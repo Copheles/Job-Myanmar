@@ -36,6 +36,7 @@ const register = async (req, res, next) => {
 
   res.status(StatusCodes.CREATED).json({
     user: {
+      _id: user._id,
       email: user.email,
       lastName: user.lastName,
       name: user.name,
@@ -112,7 +113,7 @@ const deleteUser = async (req, res) => {
     _id: req.user.userId
   })
 
-  if(user._id.toString() === '63f258985962576a7357ac51'){
+  if (user._id.toString() === '63f258985962576a7357ac51') {
     throw new Error('cant delete')
   }
 
@@ -130,7 +131,7 @@ const changePassword = async (req, res) => {
     newPassword
   } = req.body;
   console.log(req.body)
-  
+
   if (!oldPassword || !newPassword) {
     throw new BadRequestError('Please provide all fields')
   }
@@ -138,11 +139,11 @@ const changePassword = async (req, res) => {
   const user = await User.findOne({
     _id: req.user.userId
   });
-  
+
 
   const isPasswordCorrect = await user.comparePassword(oldPassword);
 
-  if(!isPasswordCorrect){
+  if (!isPasswordCorrect) {
     throw new UnAuthenticatedError('Invalid crendentials')
   }
 
