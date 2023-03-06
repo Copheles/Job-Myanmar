@@ -36,6 +36,7 @@ const register = async (req, res, next) => {
 
   res.status(StatusCodes.CREATED).json({
     user: {
+      _id: user._id,
       email: user.email,
       lastName: user.lastName,
       name: user.name,
@@ -67,6 +68,7 @@ const login = async (req, res) => {
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
     throw new BadRequestError("Invalid Credentials");
+
   }
   const token = user.createJWT();
   user.password = undefined;
