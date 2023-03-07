@@ -11,7 +11,7 @@ import {
   Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +24,7 @@ import {
   showReplyAlert,
 } from "../redux/features/feedback/feedbackSlice";
 import AlertPopUp from "./AlertPopUp";
+import { deleteCommentSocket } from "../redux/features/job/jobSlice";
 
 const Comment = ({
   comment,
@@ -35,6 +36,7 @@ const Comment = ({
   setCurrenActiveReply,
   job,
   ml,
+  socket
 }) => {
   const { _id, author, content, createdAt, commentBy, replies } = comment;
   const { _id: userId } = useSelector((state) => state.user.user);
@@ -42,12 +44,24 @@ const Comment = ({
   const { isReplyAlert, replyAlertDetails } = useSelector(
     (state) => state.feedback
   );
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    socket?.on('deleteCommentServer', (deleteCmtId) => {
+      console.log('sending from server to delete ', deleteCmtId)
+      dispatch(deleteCommentSocket(deleteCmtId))
+    })
+    
+
+  }, [socket, dispatch])
 
   const handleDelete = () => {
     setIsUpdateComment(false);
     setContent("");
     dispatch(deleteComment(_id));
+    socket.emit('deleteComment', _id)
+   
   };
 
   const handleEdit = () => {
@@ -55,9 +69,10 @@ const Comment = ({
     setIsUpdateComment(true);
     setEditCommentId(_id);
   };
-  console.log(currentActiveReply)
+
   const handleReply = () => {
     setIsUpdateComment(false);
+   
     setContent("");
     if (currentActiveReply) {
       setCurrenActiveReply(null);
@@ -87,7 +102,6 @@ const Comment = ({
         dispatch(clearAlert());
       }, 3000);
     } else {
-      console.log('click reply')
       const commentData = { content: replyContent, parentId: _id };
       dispatch(createComment(commentData));
       setContent("");
@@ -105,7 +119,7 @@ const Comment = ({
   };
 
   return (
-    <Box my={4} gap={5} ml={{ base: `${ml + 1}`, md: `${ml+2}`}} fontSize={{ base: '10px', sm: '13px', md: '15px', lg: '17px'}}>
+    <Box my={4} gap={5} ml={{ base: `${ml + 1}`, md: `${ml+2}`}} fontSize={{ base: '14px', sm: '16px', md: '17px', lg: '17px'}}>
       <Flex justifyContent="space-between">
         <Flex alignItems="center">
           <Avatar size="sm" mr={5} />

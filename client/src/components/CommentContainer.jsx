@@ -10,17 +10,26 @@ import {
 import { useSelector } from "react-redux";
 import AlertPopUp from "./AlertPopUp";
 import { createComment, updateComment } from "../redux/features/job/jobThunks";
+import { io } from "socket.io-client";
+import {
+  postCommentSocket,
+  updateCommentSocket,
+} from "../redux/features/job/jobSlice";
 
 const CommentContainer = ({ comments, job, jobOwnerId }) => {
   const [content, setContent] = useState("");
   const [isUpdateComment, setIsUpdateComment] = useState(false);
   const [editCommentId, setEditCommentId] = useState(null);
   const [currentActiveReply, setCurrenActiveReply] = useState(null);
+  const [socket, setSocket] = useState(null);
+
+  const { user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const { isShowAlert, alertDetails } = useSelector((state) => state.feedback);
-  const { comments: commentsData } = useSelector(
-    (state) => state.job.singleJob
+
+  const { postCommentData, updateCommentData } = useSelector(
+    (state) => state.job
   );
 
   const handleSubmit = (e) => {
@@ -43,7 +52,6 @@ const CommentContainer = ({ comments, job, jobOwnerId }) => {
         dispatch(createComment(commentData));
         setContent("");
       } else {
-        console.log("Updating comment");
         const commentData = { content };
         const id = editCommentId;
         dispatch(updateComment({ id, commentData }));
@@ -58,7 +66,31 @@ const CommentContainer = ({ comments, job, jobOwnerId }) => {
     setContent(e.target.value);
   };
 
-  useEffect(() => {}, [commentsData]);
+  useEffect(() => {
+    const newSocket = io("https://jobmyanmarsocketserver.onrender.com");
+    setSocket(newSocket);
+  }, [user]);
+
+  useEffect(() => {
+    if (socket === null) return;
+    socket.on("connect", () => {
+      console.log("Client SocketID ", socket.id);
+    });
+    if (postCommentData) {
+      socket.emit("postComment", postCommentData);
+    }
+    socket.on("postCommentServer", (data) => {
+      dispatch(postCommentSocket(data));
+    });
+
+    if (updateCommentData) {
+      socket.emit("updateComment", updateCommentData);
+    }
+
+    socket.on("updateCommentServer", (data) => {
+      dispatch(updateCommentSocket(data));
+    });
+  }, [postCommentData, socket, dispatch, updateCommentData]);
 
   return (
     <Box mt={10}>
@@ -81,6 +113,7 @@ const CommentContainer = ({ comments, job, jobOwnerId }) => {
                 setCurrenActiveReply={setCurrenActiveReply}
                 job={job}
                 ml={0}
+                socket={socket}
               />
               <Divider />
             </Box>

@@ -280,8 +280,6 @@ export const createComment = createAsyncThunk('job/addcomment', async(commendDat
 
 export const deleteComment = createAsyncThunk('jobs/deleteCommet', async(id, thunkAPI) => {
   const token = localStorage.getItem('token')
-
-  console.log(id)
   try {
     await axios.delete(`${API_COMMENTS_URL}/${id}`, {
       headers: {
