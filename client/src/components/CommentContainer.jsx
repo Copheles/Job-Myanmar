@@ -67,7 +67,8 @@ const CommentContainer = ({ comments, job, jobOwnerId }) => {
   };
 
   useEffect(() => {
-    const newSocket = io("https://jobmyanmarsocketserver.onrender.com");
+    // const newSocket = io("https://jobmyanmarsocketserver.onrender.com");
+    const newSocket = io("http://localhost:4000");
     setSocket(newSocket);
   }, [user]);
 
@@ -77,7 +78,8 @@ const CommentContainer = ({ comments, job, jobOwnerId }) => {
       console.log("Client SocketID ", socket.id);
     });
     if (postCommentData) {
-      socket.emit("postComment", postCommentData);
+      const data = [postCommentData, job]
+      socket.emit("postComment", data );
     }
     socket.on("postCommentServer", (data) => {
       dispatch(postCommentSocket(data));
@@ -90,7 +92,7 @@ const CommentContainer = ({ comments, job, jobOwnerId }) => {
     socket.on("updateCommentServer", (data) => {
       dispatch(updateCommentSocket(data));
     });
-  }, [postCommentData, socket, dispatch, updateCommentData]);
+  }, [postCommentData, socket, dispatch, updateCommentData, job]);
 
   return (
     <Box mt={10}>

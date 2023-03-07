@@ -72,16 +72,18 @@ const jobSlice = createSlice({
     },
     postCommentSocket: (state, { payload }) => {
       state.isCommentLoading = false;
-      const parentId = payload.parentId;
+      const parentId = payload[0].parentId;
       const comments = state.singleJob.comments;
-
+      
       if (!parentId) {
         const isTrue = comments.some((comment) => {
           console.log(typeof comment._id);
-          return comment._id === payload._id;
+          return comment._id === payload[0]._id;
         });
         if (!isTrue) {
-          comments.push(payload);
+          if(state.singleJob.job._id === payload[1]){
+            comments.push(payload[0]);
+          }
         }
       } else {
         const findParendComment = (cmts) => {

@@ -107,6 +107,7 @@ const updateUser = async (req, res) => {
     token,
     location: user.location
   });
+  
 };
 
 const deleteUser = async (req, res) => {
