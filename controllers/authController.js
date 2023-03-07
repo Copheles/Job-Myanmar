@@ -68,6 +68,7 @@ const login = async (req, res) => {
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
     throw new BadRequestError("Invalid Credentials");
+
   }
   const token = user.createJWT();
   user.password = undefined;
@@ -113,7 +114,7 @@ const deleteUser = async (req, res) => {
     _id: req.user.userId
   })
 
-  if (user._id.toString() === '63f258985962576a7357ac51') {
+  if(user._id.toString() === '63fdba3ee98cc7a4afd3e8d0'){
     throw new Error('cant delete')
   }
 

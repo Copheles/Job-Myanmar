@@ -7,7 +7,7 @@ const FormTextArea = ({
   name,
   labelText,
   handleChange,
-  size
+  size,
 }) => {
 
   const bgColor = useColorModeValue("red.50", "gray.700");
@@ -21,6 +21,7 @@ const FormTextArea = ({
         onChange={handleChange}
         focusBorderColor={useColorModeValue("red.500", "red.200")}
         bg={bgColor}
+
       />
     </Box>
   );

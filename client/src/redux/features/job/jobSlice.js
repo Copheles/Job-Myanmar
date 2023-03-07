@@ -54,6 +54,8 @@ const initialState = {
   showJobAlert: false,
   alertDetails: {},
   isCommentLoading: false,
+  postCommentData: null,
+  updateCommentData: null,
 };
 
 const jobSlice = createSlice({
@@ -67,6 +69,75 @@ const jobSlice = createSlice({
     },
     clearComments: (state) => {
       state.singleJob.comments = [];
+    },
+    postCommentSocket: (state, { payload }) => {
+      state.isCommentLoading = false;
+      const parentId = payload.parentId;
+      const comments = state.singleJob.comments;
+
+      if (!parentId) {
+        const isTrue = comments.some((comment) => {
+          console.log(typeof comment._id);
+          return comment._id === payload._id;
+        });
+        if (!isTrue) {
+          comments.push(payload);
+        }
+      } else {
+        const findParendComment = (cmts) => {
+          for (let i = 0; i < cmts.length; i++) {
+            const comment = cmts[i];
+            if (comment._id === parentId) {
+              const isTrue = comment.replies.some((cmt) => {
+                return cmt._id === payload._id;
+              });
+              if (!isTrue) {
+                comment.replies.push(payload);
+                break;
+              }
+            } else {
+              findParendComment(comment.replies);
+            }
+          }
+        };
+        findParendComment(comments);
+      }
+      state.postCommentData = null;
+    },
+    deleteCommentSocket: (state, { payload }) => {
+      state.isCommentLoading = false;
+      const comments = state.singleJob.comments;
+
+      const findComments = (comments) => {
+        for (let i = 0; i < comments.length; i++) {
+          const comment = comments[i];
+          if (comment._id === payload) {
+            comments.splice(i, 1);
+            break;
+          } else {
+            findComments(comment.replies);
+          }
+        }
+      };
+
+      findComments(comments);
+    },
+    updateCommentSocket: (state, { payload }) => {
+      state.isCommentLoading = false;
+      const comments = state.singleJob.comments;
+      const findComments = (comments) => {
+        for (let i = 0; i < comments.length; i++) {
+          let comment = comments[i];
+          if (comment._id === payload._id) {
+            Object.assign(comment, payload);
+            break;
+          } else {
+            findComments(comment.replies);
+          }
+        }
+      };
+      findComments(comments);
+      state.updateCommentData = null;
     },
     handleChangeFilterInput: (state, { payload }) => {
       const { name, value } = payload;
@@ -237,6 +308,7 @@ const jobSlice = createSlice({
 
     builder.addCase(createComment.fulfilled, (state, { payload }) => {
       state.isCommentLoading = false;
+      state.postCommentData = payload.comment;
       const parentId = payload.comment.parentId;
       const comments = state.singleJob.comments;
 
@@ -295,6 +367,7 @@ const jobSlice = createSlice({
     });
     builder.addCase(updateComment.fulfilled, (state, { payload }) => {
       state.isCommentLoading = false;
+      state.updateCommentData = payload.comment;
       const comments = state.singleJob.comments;
       const findComments = (comments) => {
         for (let i = 0; i < comments.length; i++) {
@@ -308,10 +381,6 @@ const jobSlice = createSlice({
         }
       };
       findComments(comments);
-      // const index = comments.findIndex(
-      //   (comment) => payload.comment._id === comment._id
-      // );
-      // comments[index] = payload.comment;
     });
     builder.addCase(updateComment.rejected, (state) => {
       state.isCommentLoading = false;
@@ -331,6 +400,9 @@ export const {
   clearFilter,
   handleChangeFilterInput,
   searching,
+  postCommentSocket,
+  deleteCommentSocket,
+  updateCommentSocket,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

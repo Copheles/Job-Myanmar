@@ -94,6 +94,12 @@ const JobDetails = () => {
     dispatch(getSingleJob(id));
   }, [id, dispatch]);
 
+  // useEffect(() => {
+  //   if(company === ""){
+  //     navigate('/')
+  //   }
+  // }, [navigate, company])
+
   return (
     <Box>
       <Modal isOpen={isOpen} onClose={onClose}>
