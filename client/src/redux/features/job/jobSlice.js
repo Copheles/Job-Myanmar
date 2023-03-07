@@ -91,10 +91,10 @@ const jobSlice = createSlice({
             const comment = cmts[i];
             if (comment._id === parentId) {
               const isTrue = comment.replies.some((cmt) => {
-                return cmt._id === payload._id;
+                return cmt._id === payload[0]._id;
               });
               if (!isTrue) {
-                comment.replies.push(payload);
+                comment.replies.push(payload[0]);
                 break;
               }
             } else {

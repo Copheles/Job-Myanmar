@@ -79,6 +79,7 @@ const CommentContainer = ({ comments, job, jobOwnerId }) => {
     });
     if (postCommentData) {
       const data = [postCommentData, job]
+      console.log('reply ',data)
       socket.emit("postComment", data );
     }
     socket.on("postCommentServer", (data) => {
