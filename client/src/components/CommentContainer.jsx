@@ -67,8 +67,8 @@ const CommentContainer = ({ comments, job, jobOwnerId }) => {
   };
 
   useEffect(() => {
-    // const newSocket = io("https://jobmyanmarsocketserver.onrender.com");
-    const newSocket = io("http://localhost:4000");
+    const newSocket = io("https://jobmyanmarsocketserver.onrender.com");
+    // const newSocket = io("http://localhost:4000");
     setSocket(newSocket);
   }, [user]);
 
