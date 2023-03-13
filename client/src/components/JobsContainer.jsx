@@ -6,15 +6,17 @@ import {
   Spinner,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import JobCard from "./JobCard";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getAllJobs } from "../redux/features/job/jobThunks";
 import Pagination from "./Pagination";
+import { logoutUser } from "../redux/features/user/userSlice";
+import { clearAlert } from "../redux/features/feedback/feedbackSlice";
 
 const JobsContainer = () => {
-  // const cacheResults = useRef(null);
+  const { alertDetails } = useSelector((state) => state.feedback);
 
   const {
     jobs,
@@ -33,6 +35,11 @@ const JobsContainer = () => {
   useEffect(() => {
     dispatch(getAllJobs());
   }, [dispatch, page, searchType, searchText, searchStatus, sort]);
+
+  if(alertDetails.description === 'Authentication Invalid'){
+    dispatch(clearAlert())
+    dispatch(logoutUser());
+  }
 
   return (
     <>

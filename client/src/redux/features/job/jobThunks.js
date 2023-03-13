@@ -52,9 +52,11 @@ export const getAllJobs = createAsyncThunk('job/getAllJobs',  async( _, thunkAPI
         'Authorization': `Bearer ${token}`
       }
     });
+    console.log(response.data)
     
     return response.data;
   } catch (error) {
+    console.log(error)
     const message =
     (error.response &&
       error.response.data &&

@@ -74,14 +74,14 @@ const jobSlice = createSlice({
       state.isCommentLoading = false;
       const parentId = payload[0].parentId;
       const comments = state.singleJob.comments;
-      
+
       if (!parentId) {
         const isTrue = comments.some((comment) => {
           console.log(typeof comment._id);
           return comment._id === payload[0]._id;
         });
         if (!isTrue) {
-          if(state.singleJob.job._id === payload[1]){
+          if (state.singleJob.job._id === payload[1]) {
             comments.push(payload[0]);
           }
         }
@@ -234,7 +234,7 @@ const jobSlice = createSlice({
       state.totalJobs = payload.totalJobs;
       state.numOfPages = payload.numOfPages;
     });
-    builder.addCase(getAllJobs.rejected, (state) => {
+    builder.addCase(getAllJobs.rejected, (state, { payload }) => {
       state.isLoading = false;
     });
 
