@@ -15,6 +15,7 @@ import {
 } from "../../redux/features/job/jobSlice";
 import { createJob, updateJob } from "../../redux/features/job/jobThunks";
 import FormTextArea from "../../components/FormTextArea";
+import { useNavigate} from 'react-router-dom'
 
 const AddJob = () => {
   const {
@@ -33,6 +34,7 @@ const AddJob = () => {
   const { isJobEditing, EditJobId } = useSelector((state) => state.job);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,6 +61,7 @@ const AddJob = () => {
         aboutCompany,
       };
       dispatch(updateJob({ id: EditJobId, jobData: updatedData }));
+      navigate(`/job/${EditJobId}`)
     } else {
       dispatch(
         createJob({

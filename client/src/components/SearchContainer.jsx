@@ -35,6 +35,7 @@ const SearchContainer = () => {
   const handleClearFilter = () => {
     dispatch(clearFilter());
   };
+
   const handleSearch = (e) => {
     console.log(e.target.name)
     if (isLoading) return;

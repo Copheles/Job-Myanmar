@@ -6,7 +6,7 @@ import {
   Spinner,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import JobCard from "./JobCard";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
