@@ -6,7 +6,6 @@ import {
   Container,
   Heading,
   Link,
-  Progress,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
@@ -19,7 +18,10 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { loginUser, registerUser } from "../redux/features/user/userThunks";
 import { useNavigate } from "react-router-dom";
-import { showAlert, clearAlert } from "../redux/features/feedback/feedbackSlice";
+import {
+  showAlert,
+  clearAlert,
+} from "../redux/features/feedback/feedbackSlice";
 
 const initialState = {
   name: "",
@@ -31,13 +33,12 @@ const initialState = {
 const RegisterPage = () => {
   const [values, setValues] = useState(initialState);
 
-
   const bg = mode("white", "gray.700");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { user, isLoading, token } = useSelector((state) => state.user);
-  const { isShowAlert, alertDetails } = useSelector((state) => state.feedback)
+  const { isShowAlert, alertDetails } = useSelector((state) => state.feedback);
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -66,13 +67,13 @@ const RegisterPage = () => {
     if (isMember) {
       dispatch(loginUser(currentUser));
     } else {
-      dispatch(registerUser(currentUser))
+      dispatch(registerUser(currentUser));
     }
   };
 
   useEffect(() => {
     if (user && token) {
-      navigate('/')
+      navigate("/");
     }
   }, [user, token, navigate]);
   return (
@@ -137,8 +138,12 @@ const RegisterPage = () => {
           icon={<LockIcon />}
           isPassword={true}
         />
-        {isLoading && <Progress mt={1} siz='xs' w='full' isIndeterminate colorScheme="red" hasStripe />}
-        <Button colorScheme="red" type="submit" isDisabled={isLoading}>
+        <Button
+          colorScheme="red"
+          type="submit"
+          isDisabled={isLoading}
+          isLoading={isLoading}
+        >
           Submit
         </Button>
         <Text mt={10}>
@@ -152,7 +157,6 @@ const RegisterPage = () => {
           </Link>
         </Text>
       </Box>
-      
     </Container>
   );
 };

@@ -35,6 +35,7 @@ const FormRow = ({
           onChange={handleChange}
           value={value}
           focusBorderColor={useColorModeValue("red.500", "red.200")}
+          _autofill={false}
           bg={bgColor}
           placeholder={placeholder}
         />

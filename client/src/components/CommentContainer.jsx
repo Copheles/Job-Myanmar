@@ -16,6 +16,9 @@ import {
   updateCommentSocket,
 } from "../redux/features/job/jobSlice";
 
+const URL =
+  process.env.NODE_ENV === "production" ? undefined : "http://localhost:5000";
+
 const CommentContainer = ({ comments, job, jobOwnerId }) => {
   const [content, setContent] = useState("");
   const [isUpdateComment, setIsUpdateComment] = useState(false);
@@ -67,8 +70,7 @@ const CommentContainer = ({ comments, job, jobOwnerId }) => {
   };
 
   useEffect(() => {
-    const newSocket = io("https://jobmyanmarsocketserver.onrender.com");
-    // const newSocket = io("http://localhost:4000");
+    const newSocket = io(URL);
     setSocket(newSocket);
   }, [user]);
 
@@ -78,9 +80,9 @@ const CommentContainer = ({ comments, job, jobOwnerId }) => {
       console.log("Client SocketID ", socket.id);
     });
     if (postCommentData) {
-      const data = [postCommentData, job]
-      console.log('reply ',data)
-      socket.emit("postComment", data );
+      const data = [postCommentData, job];
+      console.log("reply ", data);
+      socket.emit("postComment", data);
     }
     socket.on("postCommentServer", (data) => {
       dispatch(postCommentSocket(data));

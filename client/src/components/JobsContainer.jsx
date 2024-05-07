@@ -14,7 +14,6 @@ import { getAllJobs } from "../redux/features/job/jobThunks";
 import Pagination from "./Pagination";
 
 const JobsContainer = () => {
-  // const cacheResults = useRef(null);
 
   const {
     jobs,
@@ -27,6 +26,7 @@ const JobsContainer = () => {
     numOfPages,
     totalJobs,
   } = useSelector((state) => state.job);
+  console.log('jobs', jobs)
 
   const dispatch = useDispatch();
 
