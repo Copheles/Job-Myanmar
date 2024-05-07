@@ -37,6 +37,8 @@ app.use('/api/v1/comments', commentRouter)
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
+const __dirname = path.resolve();
+
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(path.join(__dirname, 'client/build')))
 
