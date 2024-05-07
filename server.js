@@ -28,11 +28,6 @@ if(process.env.NODE_ENV !== 'production'){
   app.use(morgan('dev'))
 }
 app.use(express.json())
-console.log('hello');
-
-app.get('/', (req, res) => {
-  res.send('Welcome')
-})
 
 app.use(cors())
 app.use('/api/v1/auth', authRouter)
