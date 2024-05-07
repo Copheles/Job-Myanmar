@@ -67,7 +67,7 @@ const RichTextEditor = ({  value }) => {
       background: mode === "dark" ? "#2D3748" : "#fed7d7",
     };
     setConfig({ ...config1, style });
-  }, [mode]);
+  }, [mode, config1]);
 
   const editor = useRef(null);
   
