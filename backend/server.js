@@ -23,27 +23,30 @@ import authenticatedUser from './middleware/auth.js'
 
 mongoose.set('strictQuery', false)
 
+const __dirname = path.resolve();
+
 if(process.env.NODE_ENV === 'production'){
   app.use(morgan('dev'))
 }
-app.use(express.json())
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/jobs',authenticatedUser, jobsRouter)
 app.use('/api/v1/comments', commentRouter)
 
-app.use(notFoundMiddleware)
-app.use(errorHandlerMiddleware)
-
-const __dirname = path.resolve();
-
 if(process.env.NODE_ENV === 'production'){
   console.log('production true');
-  app.use(express.static(path.join(__dirname, 'client', 'build')))
+  app.use(express.static(path.join(__dirname, '/client/build')))
+  console.log('production hi');
 
   app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')))
 }
+
+
+app.use(notFoundMiddleware)
+app.use(errorHandlerMiddleware)
 
 const port = process.env.PORT || 5000
 
