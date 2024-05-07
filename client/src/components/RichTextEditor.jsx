@@ -54,12 +54,11 @@ const config = {
   },
 };
 
-
-const RichTextEditor = ({  value }) => {
+const RichTextEditor = ({ value }) => {
   const { mode } = useSelector((state) => state.user);
   const [config1, setConfig] = useState(config);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const style = {
@@ -67,17 +66,16 @@ const RichTextEditor = ({  value }) => {
       background: mode === "dark" ? "#2D3748" : "#fed7d7",
     };
     setConfig({ ...config1, style });
-  }, [mode, config1]);
+  }, [mode]);
 
   const editor = useRef(null);
-  
+
   return (
     <Box mt={5}>
       <FormLabel mb={5}>Job Description Details</FormLabel>
       <SimpleGrid columns={{ base: 1, xl: 2 }} gap={5} mb={5}>
         <JoditEditor
           as="input"
-
           config={config1}
           ref={editor}
           onChange={(content) => dispatch(changeJobDescription(content))}
