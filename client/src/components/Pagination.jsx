@@ -50,41 +50,45 @@ const Pagination = () => {
       <Heading fontWeight="thin" fontSize={{ base: "18px", lg: "20px" }}>
         {page} of {numOfPages} pages
       </Heading>
-      <Flex gap={2} mt={5} alignItems='center'>
-        <IconButton
+      <Flex gap={2} mt={5} alignItems="center">
+        <Button
           colorScheme="red"
-          variant='outline'
-          icon={<BiSkipPrevious size={30} />}
+          variant="outline"
           onClick={prevPage}
-          size={{base: 'xs', lg: 'md'}}
-        />
-        <Button colorScheme='red' size={{base: 'sm', lg: 'md'}}>{page}</Button>
-        <IconButton
+          size={{ base: "xs", lg: "sm" }}
+        >
+          <BiSkipPrevious />
+        </Button>
+        <Button colorScheme="red" size={{ base: "xs", lg: "sm" }}>
+          {page}
+        </Button>
+        <Button
           colorScheme="red"
-          variant='outline'
-          icon={<BiSkipNext size={30} />}
+          variant="outline"
           onClick={nextPage}
-          size={{base: 'xs', lg: 'md'}}
-        />
-        <Flex alignItems='center'>
+          size={{ base: "xs", lg: "sm" }}
+        >
+          <BiSkipNext />
+        </Button>
+        <Flex alignItems="center">
           <Input
             type="number"
             w="100px"
             focusBorderColor={useColorModeValue("red.500", "red.200")}
             bg={useColorModeValue("red.50", "gray.700")}
             value={inputPage}
-            placeholder='Go to'
+            placeholder="Go to"
             onKeyDown={(e) =>
               invalidInput.includes(e.key) && e.preventDefault()
             }
-            size={{base: 'sm', lg: 'md'}}
+            size={{ base: "xs", lg: "sm" }}
             onChange={(e) => setInputPage(e.target.value)}
           />
           <Button
             mx={2}
             colorScheme="red"
             onClick={GotoPage}
-            size={{base: 'sm', lg: 'md'}}
+            size={{ base: "xs", lg: "sm" }}
           >
             Go to
           </Button>
