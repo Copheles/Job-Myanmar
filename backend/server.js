@@ -37,9 +37,7 @@ app.use('/api/v1/jobs',authenticatedUser, jobsRouter)
 app.use('/api/v1/comments', commentRouter)
 
 if(process.env.NODE_ENV === 'production'){
-  console.log('production true');
   app.use(express.static(path.join(__dirname, '/client/build')))
-  console.log('production hi');
 
   app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')))
 }
