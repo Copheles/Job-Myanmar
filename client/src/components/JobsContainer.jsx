@@ -26,7 +26,6 @@ const JobsContainer = () => {
     numOfPages,
     totalJobs,
   } = useSelector((state) => state.job);
-  console.log('jobs', jobs)
 
   const dispatch = useDispatch();
 

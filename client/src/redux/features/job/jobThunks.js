@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { clearAlert, showAlert } from "../feedback/feedbackSlice";
 import { clearComments, clearJobInputFields, setFalseToJobEditingAndJobIdToNull} from "./jobSlice";
+import { logoutUser } from "../user/userSlice";
 
 const API_JOBS_URL = "/api/v1/jobs";
 const API_COMMENTS_URL = '/api/v1/comments'
@@ -55,6 +56,11 @@ export const getAllJobs = createAsyncThunk('job/getAllJobs',  async( _, thunkAPI
     
     return response.data;
   } catch (error) {
+    console.log(typeof error.response.status);
+    if(error.response.status === 401){
+      thunkAPI.dispatch(logoutUser())
+      return;
+    }
     const message =
     (error.response &&
       error.response.data &&

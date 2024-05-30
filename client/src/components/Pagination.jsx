@@ -1,100 +1,156 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  IconButton,
-  Input,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Box, Button, Flex } from "@chakra-ui/react";
+import React from "react";
 import { BiSkipPrevious, BiSkipNext } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { changePage } from "../redux/features/job/jobSlice";
-import { useNavigate } from "react-router-dom";
 
 const Pagination = () => {
-  const [inputPage, setInputPage] = useState("");
   const { numOfPages, page } = useSelector((state) => state.job);
-  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const invalidInput = ["e", "E", "+", "-", "."];
-
-  const nextPage = () => {
-    let newPage = page + 1;
-    if (newPage > numOfPages) {
-      newPage = 1;
-    }
-    dispatch(changePage(newPage));
+  const handleChangePage = (page) => {
+    if (page < 1) page = 1;
+    if (page > numOfPages) page = numOfPages;
+    dispatch(changePage(page));
   };
 
-  const prevPage = () => {
-    let newPage = page - 1;
-    if (newPage < 1) {
-      newPage = numOfPages;
-    }
-    dispatch(changePage(newPage));
-  };
+  const renderPages = () => {
+    let pages = [];
+    if (page <= 4) {
+      for (let i = 1; i <= Math.min(5, numOfPages); i++) {
+        pages.push(
+          <Button
+            size={{ base: "sm", md: "md" }}
+            colorScheme={page === i ? "red" : "gray"}
+            key={i}
+            onClick={() => handleChangePage(i)}
+          >
+            {i}
+          </Button>
+        );
+      }
 
-  const GotoPage = () => {
-    if (inputPage > numOfPages) {
-      navigate("/page=undefined");
+      if (numOfPages > 5) {
+        pages.push(
+          <Button
+            size={{ base: "sm", md: "md" }}
+            colorScheme={"gray"}
+            key="leftDots"
+            onClick={() => handleChangePage(page + 5)}
+          >
+            ...
+          </Button>
+        );
+      }
+
+      pages.push(
+        <Button
+          size={{ base: "sm", md: "md" }}
+          colorScheme={page === numOfPages ? "red" : "gray"}
+          key={numOfPages}
+          onClick={() => handleChangePage(numOfPages)}
+        >
+          {numOfPages}
+        </Button>
+      );
+    } else if (page > 4 && numOfPages - page > 3) {
+      pages.push(
+        <Button
+          size={{ base: "sm", md: "md" }}
+          colorScheme={page === 1 ? "red" : "gray"}
+          key={1}
+          onClick={() => handleChangePage(1)}
+        >
+          1
+        </Button>
+      );
+      pages.push(
+        <Button
+          size={{ base: "sm", md: "md" }}
+          colorScheme={"gray"}
+          key="leftDots"
+          onClick={() => handleChangePage(page - 5)}
+        >
+          ...
+        </Button>
+      );
+
+      for (let i = page - 1; i <= page + 1; i++) {
+        pages.push(
+          <Button
+            size={{ base: "sm", md: "md" }}
+            colorScheme={page === i ? "red" : "gray"}
+            key={i}
+            onClick={() => handleChangePage(i)}
+          >
+            {i}
+          </Button>
+        );
+      }
+      pages.push(
+        <Button
+          size={{ base: "sm", md: "md" }}
+          colorScheme={"gray"}
+          key="rightDots"
+          onClick={() => handleChangePage(page + 5)}
+        >
+          ...
+        </Button>
+      );
+      pages.push(
+        <Button
+          size={{ base: "sm", md: "md" }}
+          colorScheme={page === numOfPages ? "red" : "gray"}
+          key={numOfPages}
+          onClick={() => handleChangePage(numOfPages)}
+        >
+          {numOfPages}
+        </Button>
+      );
+    } else {
+      pages.push(
+        <Button
+          size={{ base: "sm", md: "md" }}
+          colorScheme={page === 1 ? "red" : "gray"}
+          key={1}
+          onClick={() => handleChangePage(1)}
+        >
+          1
+        </Button>
+      );
+      pages.push(
+        <Button
+          size={{ base: "sm", md: "md" }}
+          colorScheme={"gray"}
+          key="leftDots"
+          onClick={() => handleChangePage(page - 5)}
+        >
+          ...
+        </Button>
+      );
+
+      for (let i = numOfPages - 4; i <= numOfPages; i++) {
+        pages.push(
+          <Button
+            size={{ base: "sm", md: "md" }}
+            colorScheme={page === i ? "red" : "gray"}
+            key={i}
+            onClick={() => handleChangePage(i)}
+          >
+            {i}
+          </Button>
+        );
+      }
     }
-    dispatch(changePage(inputPage));
+
+    return pages;
   };
 
   return (
-    <Box mt={5} mb={10}>
-      <Heading fontWeight="thin" fontSize={{ base: "18px", lg: "20px" }}>
-        {page} of {numOfPages} pages
-      </Heading>
-      <Flex gap={2} mt={5} alignItems="center">
-        <Button
-          colorScheme="red"
-          variant="outline"
-          onClick={prevPage}
-          size={{ base: "xs", lg: "sm" }}
-        >
-          <BiSkipPrevious />
-        </Button>
-        <Button colorScheme="red" size={{ base: "xs", lg: "sm" }}>
-          {page}
-        </Button>
-        <Button
-          colorScheme="red"
-          variant="outline"
-          onClick={nextPage}
-          size={{ base: "xs", lg: "sm" }}
-        >
-          <BiSkipNext />
-        </Button>
-        <Flex alignItems="center">
-          <Input
-            type="number"
-            w="100px"
-            focusBorderColor={useColorModeValue("red.500", "red.200")}
-            bg={useColorModeValue("red.50", "gray.700")}
-            value={inputPage}
-            placeholder="Go to"
-            onKeyDown={(e) =>
-              invalidInput.includes(e.key) && e.preventDefault()
-            }
-            size={{ base: "xs", lg: "sm" }}
-            onChange={(e) => setInputPage(e.target.value)}
-          />
-          <Button
-            mx={2}
-            colorScheme="red"
-            onClick={GotoPage}
-            size={{ base: "xs", lg: "sm" }}
-          >
-            Go to
-          </Button>
-        </Flex>
-      </Flex>
-    </Box>
+    <Flex my={10} gap={1}>
+      {renderPages()}
+    </Flex>
   );
 };
 
