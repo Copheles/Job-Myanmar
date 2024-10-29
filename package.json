@@ -5,17 +5,26 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
+    "build": "tsc && npm install --prefix client && npm run build --prefix client",
+    "start": "node dist/server.js",
+    "server": "nodemon dist/server.js",
+    "watch": "tsc -w",
     "client": "npm start --prefix client",
-    "dev": "concurrently \" npm run server\" \" npm run client \"",
-    "build": "npm install && npm install --prefix client && npm run build --prefix client"
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "@types/bcryptjs": "^2.4.6",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/morgan": "^1.9.9",
+    "@types/validator": "^13.12.2",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
