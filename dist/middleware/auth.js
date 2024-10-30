@@ -8,13 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { UnAuthenticatedError } from "../errors/index.js";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 const auth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let token;
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer')) {
+    if (authHeader || (authHeader === null || authHeader === void 0 ? void 0 : authHeader.startsWith("Bearer"))) {
+        token = authHeader.split(" ")[1];
+    }
+    else if (req.cookies.jwt) {
+        token = req.cookies.jwt;
+    }
+    if (!token) {
         throw new UnAuthenticatedError("Authentication Invalid");
     }
-    const token = authHeader.split(' ')[1];
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET);
         if (typeof payload !== "string" && payload.userId) {

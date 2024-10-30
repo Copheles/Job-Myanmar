@@ -4,6 +4,7 @@ dotenv.config()
 import 'express-async-errors'
 import morgan from 'morgan'
 import path from 'path'
+import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose'
 import { app, server } from './socket/socket.js'
 
@@ -28,8 +29,10 @@ if(process.env.NODE_ENV === 'production'){
   app.use(morgan('dev'))
 }
 
-app.use(express.json())
+app.use(express.json({ limit: '5mb'}))
 app.use(express.urlencoded({ extended: true}))
+app.use(cookieParser())
+
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/jobs',authenticatedUser, jobsRouter)

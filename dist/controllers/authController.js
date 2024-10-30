@@ -13,6 +13,7 @@ import { checkPermissions } from "../utils/checkPermissions.js";
 import BadRequestError from "../errors/bad-request.js";
 import UnAuthenticatedError from "../errors/unauthenticated.js";
 import NotFoundError from "../errors/not-found.js";
+import { attacthCookieToResponse } from "../utils/jwt.js";
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
@@ -30,15 +31,11 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         password,
     });
     const token = user.createJWT();
+    attacthCookieToResponse({ res, token });
     res.status(StatusCodes.CREATED).json({
-        user: {
-            _id: user._id,
-            email: user.email,
-            lastName: user.lastName,
-            name: user.name,
-            location: user.location,
-        },
-        token,
+        _id: user._id,
+        email: user.email,
+        name: user.name,
         location: user.location,
     });
 });
@@ -59,10 +56,18 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         throw new BadRequestError("Invalid Credentials");
     }
     const token = user.createJWT();
+    attacthCookieToResponse({ res, token });
+    res.status(StatusCodes.OK).json({
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        location: user.location,
+    });
+});
+const getMe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield User.findById(req.user.userId).select("-password");
     res.status(StatusCodes.OK).json({
         user,
-        token,
-        location: user.location,
     });
 });
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -82,8 +87,9 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     yield user.save();
     const token = user.createJWT();
     res.status(StatusCodes.OK).json({
-        user,
-        token,
+        id: user._id,
+        name: user.name,
+        email: user.email,
         location: user.location,
     });
 });
@@ -125,4 +131,13 @@ const changePassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
         message: "Success! Password Updated.",
     });
 });
-export { register, login, updateUser, deleteUser, changePassword };
+const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.cookie("jwt", "", {
+        httpOnly: true,
+        expires: new Date(0),
+    });
+    res.status(StatusCodes.OK).json({
+        message: "Logged out successfully",
+    });
+});
+export { register, login, getMe, updateUser, deleteUser, changePassword, logout, };

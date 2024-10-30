@@ -6,6 +6,7 @@ import { checkPermissions } from "../utils/checkPermissions.js";
 import BadRequestError from "../errors/bad-request.js";
 import UnAuthenticatedError from "../errors/unauthenticated.js";
 import NotFoundError from "../errors/not-found.js";
+import { attacthCookieToResponse } from "../utils/jwt.js";
 
 const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -27,16 +28,12 @@ const register = async (req: Request, res: Response) => {
   });
 
   const token = user.createJWT();
+  attacthCookieToResponse({ res, token });
 
   res.status(StatusCodes.CREATED).json({
-    user: {
-      _id: user._id,
-      email: user.email,
-      lastName: user.lastName,
-      name: user.name,
-      location: user.location,
-    },
-    token,
+    _id: user._id,
+    email: user.email,
+    name: user.name,
     location: user.location,
   });
 };
@@ -61,11 +58,21 @@ const login = async (req: Request, res: Response) => {
     throw new BadRequestError("Invalid Credentials");
   }
   const token = user.createJWT();
+  attacthCookieToResponse({ res, token });
+
+  res.status(StatusCodes.OK).json({
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    location: user.location,
+  });
+};
+
+const getMe = async (req: Request, res: Response) => {
+  const user = await User.findById(req.user.userId).select("-password");
 
   res.status(StatusCodes.OK).json({
     user,
-    token,
-    location: user.location,
   });
 };
 
@@ -79,7 +86,7 @@ const updateUser = async (req: Request, res: Response) => {
     _id: req.user.userId,
   }).select("-password");
 
-  if(!user){
+  if (!user) {
     throw new NotFoundError(`User with id:${req.user.userId}`);
   }
 
@@ -91,8 +98,9 @@ const updateUser = async (req: Request, res: Response) => {
 
   const token = user.createJWT();
   res.status(StatusCodes.OK).json({
-    user,
-    token,
+    id: user._id,
+    name: user.name,
+    email: user.email,
     location: user.location,
   });
 };
@@ -102,10 +110,9 @@ const deleteUser = async (req: Request, res: Response) => {
     _id: req.user.userId,
   });
 
-  if(!user){
+  if (!user) {
     throw new NotFoundError(`User with id:${req.user.userId}`);
   }
-
 
   if (user._id.toString() === "63fdba3ee98cc7a4afd3e8d0") {
     throw new Error("cant delete");
@@ -131,7 +138,7 @@ const changePassword = async (req: Request, res: Response) => {
     _id: req.user.userId,
   });
 
-  if(!user){
+  if (!user) {
     throw new NotFoundError(`User with id:${req.user.userId}`);
   }
 
@@ -149,4 +156,23 @@ const changePassword = async (req: Request, res: Response) => {
   });
 };
 
-export { register, login, updateUser, deleteUser, changePassword };
+const logout = async (req: Request, res: Response) => {
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+
+  res.status(StatusCodes.OK).json({
+    message: "Logged out successfully",
+  });
+};
+
+export {
+  register,
+  login,
+  getMe,
+  updateUser,
+  deleteUser,
+  changePassword,
+  logout,
+};

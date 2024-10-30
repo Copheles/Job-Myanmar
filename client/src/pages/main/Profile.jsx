@@ -23,7 +23,7 @@ import { clearAlert } from "../../redux/features/feedback/feedbackSlice";
 
 const Profile = () => {
   
-  const [activeTab, setActiveTab] = useState(0);
+  const [, setActiveTab] = useState(0);
   const dispatch = useDispatch();
   
 

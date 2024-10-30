@@ -19,7 +19,18 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "paths": {
+      "@/*": ["./src/"],
+      "@apis/*": ["./src/apis/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/components/*"],
+      "@features/*": ["./src/features/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@redux/*": ["./src/redux/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
   },
   "include": ["src"]
 }
