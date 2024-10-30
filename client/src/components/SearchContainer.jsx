@@ -83,7 +83,7 @@ const SearchContainer = () => {
             name="searchStatus"
             handleChange={handleSearch}
             labelText="status"
-            options={["all", ...statusOptions]}
+            options={["all", ...  ]}
           />
           <SelectField
             value={searchType}
