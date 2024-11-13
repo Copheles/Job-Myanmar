@@ -8,7 +8,7 @@ import moment from "moment";
 import { Request, Response } from "express";
 
 const createJob = async (req: Request, res: Response) => {
-  const { position, company, jobLocation, jobDescription, aboutCompany } =
+  const { position, company, jobLocation, jobDescription, aboutCompany, jobType } =
     req.body;
 
   if (
@@ -16,6 +16,7 @@ const createJob = async (req: Request, res: Response) => {
     !company ||
     !jobLocation ||
     !jobDescription ||
+    !jobType ||
     !aboutCompany
   ) {
     throw new BadRequestError("Please provide all values");
@@ -60,6 +61,9 @@ const getAllJobs = async (req: Request, res: Response) => {
   }
   if (sort === "z-a") {
     result = result.sort("-position");
+  }
+  if (!sort || sort === 'all') {
+    result = result.sort("-createdAt");
   }
 
   const page = Number(req.query.page) || 1;

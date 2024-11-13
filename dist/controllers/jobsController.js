@@ -15,11 +15,12 @@ import { checkPermissions } from "../utils/checkPermissions.js";
 import mongoose from "mongoose";
 import moment from "moment";
 const createJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { position, company, jobLocation, jobDescription, aboutCompany } = req.body;
+    const { position, company, jobLocation, jobDescription, aboutCompany, jobType } = req.body;
     if (!position ||
         !company ||
         !jobLocation ||
         !jobDescription ||
+        !jobType ||
         !aboutCompany) {
         throw new BadRequestError("Please provide all values");
     }
@@ -56,6 +57,9 @@ const getAllJobs = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     if (sort === "z-a") {
         result = result.sort("-position");
+    }
+    if (!sort || sort === 'all') {
+        result = result.sort("-createdAt");
     }
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 6;

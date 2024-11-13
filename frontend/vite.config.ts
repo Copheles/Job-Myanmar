@@ -22,6 +22,10 @@ export default defineConfig({
         find: "@features",
         replacement: path.resolve(__dirname, "./src/features"),
       },
+      {
+        find: "@interface",
+        replacement: path.resolve(__dirname, "./src/interface"),
+      },
       { find: "@hooks", replacement: path.resolve(__dirname, "./src/hooks") },
       { find: "@redux", replacement: path.resolve(__dirname, "./src/redux") },
       { find: "@routes", replacement: path.resolve(__dirname, "./src/routes") },

@@ -16,7 +16,7 @@ import {
   searching,
 } from "../redux/features/job/jobSlice";
 
-import { CgSortAz } from 'react-icons/cg'
+import { CgSortAz } from "react-icons/cg";
 
 const SearchContainer = () => {
   const {
@@ -37,7 +37,7 @@ const SearchContainer = () => {
   };
 
   const handleSearch = (e) => {
-    console.log(e.target.name)
+    console.log(e.target.name);
     if (isLoading) return;
     const name = e.target.name;
     const value = e.target.value;
@@ -45,45 +45,56 @@ const SearchContainer = () => {
   };
 
   const searchJobs = (e) => {
-    e.preventDefault()
-    dispatch(searching(search))
-  }
+    e.preventDefault();
+    dispatch(searching(search));
+  };
 
   return (
     <Box
-      px={{ base: 2, md: 8}}
-      py={{ base: 3, md: 4}}
+      px={{ base: 2, md: 8 }}
+      py={{ base: 3, md: 4 }}
       w="full"
       bg={mode("white", "gray.700")}
       mb={10}
       border
       borderRadius="10px"
     >
-      <Flex alignItems="center" gap={{base: 5, md: 6}} as='form' onSubmit={searchJobs}>
+      <Flex
+        alignItems="center"
+        gap={{ base: 5, md: 6 }}
+        as="form"
+        onSubmit={searchJobs}
+      >
         <FormRow
           icon={<Search2Icon />}
           type="text"
-          name='search'
-          labelText=' '
+          name="search"
+          labelText=" "
           placeholder="Search"
           value={search}
           handleChange={handleSearch}
         />
-        <Button mb={3} size={{base: 'sm', md: 'md'}} type='submit' colorScheme="red" w={{ base: 20, lg: 'full'}}>
+        <Button
+          mb={3}
+          size={{ base: "sm", md: "md" }}
+          type="submit"
+          colorScheme="red"
+          w={{ base: 20, lg: "full" }}
+        >
           Search
         </Button>
       </Flex>
-      <Flex
-        justifyContent="space-between"
-        flexDirection={{ base: "column" }}
-      >
-        <SimpleGrid columns={{ base: 1, md: 3}} gap={{ base: 2, md: 4, lg: 6 }}>
+      <Flex justifyContent="space-between" flexDirection={{ base: "column" }}>
+        <SimpleGrid
+          columns={{ base: 1, md: 3 }}
+          gap={{ base: 2, md: 4, lg: 6 }}
+        >
           <SelectField
             value={searchStatus}
             name="searchStatus"
             handleChange={handleSearch}
             labelText="status"
-            options={["all", ...  ]}
+            options={["all", ...statusOptions]}
           />
           <SelectField
             value={searchType}

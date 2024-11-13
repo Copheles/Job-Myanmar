@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./apiSlice";
 import authSliceReducer from "@features/Auth/slice/authSlice";
+import jobsFilterReducer from '@features/Main/AllJobs/slice/jobsFilterSlice';
+import modalSliceReducer from "@components/modal/modalSlice";
 
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authSliceReducer,
+    modal: modalSliceReducer,
+    jobFilter: jobsFilterReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

@@ -7,16 +7,14 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  Button,
   Avatar,
   Flex,
 } from "@chakra-ui/react";
 import { FaAlignLeft, FaUserCircle } from "react-icons/fa";
 import { BiLogOutCircle } from "react-icons/bi";
 
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { useAppDispatch } from "@redux/hooks";
 import { useLogoutMutation } from "@features/Auth/slice/authApiSlice";
 import { logout } from "@features/Auth/slice/authSlice";
 
@@ -39,8 +37,6 @@ const Navbar = ({ toggleSidebar }: Props) => {
       console.log(error);
     }
   };
-
-  const { userInfo } = useAppSelector((state) => state.auth);
 
   return (
     <Box
@@ -72,13 +68,8 @@ const Navbar = ({ toggleSidebar }: Props) => {
       </Text>
 
       <Menu>
-        <MenuButton
-          size={{ base: "sm", lg: "md" }}
-          as={Button}
-          rightIcon={<ChevronDownIcon mb={1} />}
-        >
-          <Avatar size="xs" mr={2} /> {userInfo?.name}
-        </MenuButton>
+        <Avatar as={MenuButton} size="sm" mr={2} border="1px solid" />
+
         <MenuList>
           <MenuItem minH="10px" onClick={() => navigate("/profile")}>
             <Flex justifyContent="space-between" alignItems="center" gap={3}>

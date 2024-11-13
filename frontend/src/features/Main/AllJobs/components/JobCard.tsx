@@ -16,26 +16,33 @@ import IconDesign from "@components/IconDesign";
 import { useAppSelector } from "@redux/hooks";
 import moment from "moment";
 import { FaBriefcase, FaLocationArrow } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function JobCard({ job }: { job: any }) {
   const { userInfo } = useAppSelector((state) => state.auth);
   const fromNow = moment(job.createdAt).fromNow();
 
+  const navigate = useNavigate();
+
   const statusColor =
-    status === "interview"
+    job.status === "interview"
       ? mode("#38A169", "#68D391")
-      : status === "pending"
+      : job.status === "pending"
       ? mode("#F6E05E", "#D69E2E")
       : mode("#E53E3E", "#FC8181");
 
   const statusIcon =
-    status === "interview" ? (
+    job.status === "interview" ? (
       <CheckCircleIcon color={statusColor} />
-    ) : status === "pending" ? (
+    ) : job.status === "pending" ? (
       <WarningTwoIcon color={statusColor} />
     ) : (
       <NotAllowedIcon color={statusColor} />
     );
+
+  const handleClick = (id: string) => {
+    navigate(`jobs/${id}`)
+  }
 
   return (
     <Card
@@ -44,6 +51,7 @@ export default function JobCard({ job }: { job: any }) {
       borderLeftColor={mode("gray.200", "red.200")}
       cursor="pointer"
       _hover={{ bg: mode("gray.50", "gray.600") }}
+      onClick={() => handleClick(job._id)}
     >
       <CardHeader>
         <Flex alignItems="center" justifyContent="space-between">

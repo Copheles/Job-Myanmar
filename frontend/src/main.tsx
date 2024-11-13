@@ -10,7 +10,7 @@ import { store } from "@redux/store";
 const styles = {
   global: (props: any) => ({
     body: {
-      bg: mode("gray.200", "gray.800")(props),
+      bg: mode("gray.300", "gray.800")(props),
     },
   }),
 };
@@ -27,6 +27,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+
       <Provider store={store}>
         <RouterProvider router={router} />
       </Provider>
