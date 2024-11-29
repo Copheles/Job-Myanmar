@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
@@ -46,39 +37,33 @@ const UserSchema = new mongoose.Schema({
         default: "Yangon",
     },
 }, { timestamps: true });
-UserSchema.pre("save", function () {
-    return __awaiter(this, void 0, void 0, function* () {
-        // console.log(this.modifiedPaths());
-        // console.log(this.isModified('name'));
-        if (!this.isModified("password"))
-            return;
-        const salt = yield bcrypt.genSalt(10);
-        this.password = yield bcrypt.hash(this.password, salt);
-    });
+UserSchema.pre("save", async function () {
+    // console.log(this.modifiedPaths());
+    // console.log(this.isModified('name'));
+    if (!this.isModified("password"))
+        return;
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
 });
-UserSchema.pre("remove", function (next) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const deleteRelatedJobs = yield this.$model("Job").deleteMany({
-            createdBy: this._id,
-        });
-        const deleteRelatedComments = yield this.$model("Comment").deleteMany({
-            commentBy: this._id,
-        });
-        Promise.all([deleteRelatedJobs, deleteRelatedComments]);
-        next();
+UserSchema.pre("remove", async function (next) {
+    const deleteRelatedJobs = await this.$model("Job").deleteMany({
+        createdBy: this._id,
     });
+    const deleteRelatedComments = await this.$model("Comment").deleteMany({
+        commentBy: this._id,
+    });
+    Promise.all([deleteRelatedJobs, deleteRelatedComments]);
+    next();
 });
 UserSchema.methods.createJWT = function () {
     return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_LIFETIME,
     });
 };
-UserSchema.methods.comparePassword = function (candidatePassword) {
-    return __awaiter(this, void 0, void 0, function* () {
-        console.log(this.password);
-        const isMatch = yield bcrypt.compare(candidatePassword, this.password);
-        return isMatch;
-    });
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+    console.log(this.password);
+    const isMatch = await bcrypt.compare(candidatePassword, this.password);
+    return isMatch;
 };
 const User = mongoose.model("User", UserSchema);
 export default User;

@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { checkPermissions } from "../utils/checkPermissions.js";
@@ -14,18 +5,18 @@ import BadRequestError from "../errors/bad-request.js";
 import UnAuthenticatedError from "../errors/unauthenticated.js";
 import NotFoundError from "../errors/not-found.js";
 import { attacthCookieToResponse } from "../utils/jwt.js";
-const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const register = async (req, res) => {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
         throw new BadRequestError("Please provide all values");
     }
-    const isUserExist = yield User.findOne({
+    const isUserExist = await User.findOne({
         email,
     });
     if (isUserExist) {
         throw new BadRequestError("Email already in use");
     }
-    const user = yield User.create({
+    const user = await User.create({
         name,
         email,
         password,
@@ -38,20 +29,20 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         name: user.name,
         location: user.location,
     });
-});
-const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const login = async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
         throw new BadRequestError("Please provide all values");
     }
-    const user = yield User.findOne({
+    const user = await User.findOne({
         email,
     }).select("+password");
     console.log(user);
     if (!user) {
         throw new UnAuthenticatedError("Invalid Credentials");
     }
-    const isPasswordCorrect = yield user.comparePassword(password);
+    const isPasswordCorrect = await user.comparePassword(password);
     if (!isPasswordCorrect) {
         throw new BadRequestError("Invalid Credentials");
     }
@@ -63,19 +54,19 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         email: user.email,
         location: user.location,
     });
-});
-const getMe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield User.findById(req.user.userId).select("-password");
+};
+const getMe = async (req, res) => {
+    const user = await User.findById(req.user.userId).select("-password");
     res.status(StatusCodes.OK).json({
         user,
     });
-});
-const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const updateUser = async (req, res) => {
     const { email, name, location } = req.body;
     if (!email || !name || !location) {
         throw new BadRequestError("Please provide all values");
     }
-    const user = yield User.findOne({
+    const user = await User.findOne({
         _id: req.user.userId,
     }).select("-password");
     if (!user) {
@@ -84,7 +75,7 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     user.email = email;
     user.name = name;
     user.location = location;
-    yield user.save();
+    await user.save();
     const token = user.createJWT();
     res.status(StatusCodes.OK).json({
         id: user._id,
@@ -92,9 +83,9 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         email: user.email,
         location: user.location,
     });
-});
-const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield User.findOne({
+};
+const deleteUser = async (req, res) => {
+    const user = await User.findOne({
         _id: req.user.userId,
     });
     if (!user) {
@@ -108,30 +99,30 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.status(StatusCodes.OK).json({
         message: "Successfully deleted",
     });
-});
-const changePassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const changePassword = async (req, res) => {
     const { oldPassword, newPassword } = req.body;
     console.log(req.body);
     if (!oldPassword || !newPassword) {
         throw new BadRequestError("Please provide all fields");
     }
-    const user = yield User.findOne({
+    const user = await User.findOne({
         _id: req.user.userId,
     });
     if (!user) {
         throw new NotFoundError(`User with id:${req.user.userId}`);
     }
-    const isPasswordCorrect = yield user.comparePassword(oldPassword);
+    const isPasswordCorrect = await user.comparePassword(oldPassword);
     if (!isPasswordCorrect) {
         throw new UnAuthenticatedError("Invalid crendentials");
     }
     user.password = newPassword;
-    yield user.save();
+    await user.save();
     res.status(StatusCodes.OK).json({
         message: "Success! Password Updated.",
     });
-});
-const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const logout = async (req, res) => {
     res.cookie("jwt", "", {
         httpOnly: true,
         expires: new Date(0),
@@ -139,5 +130,5 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(StatusCodes.OK).json({
         message: "Logged out successfully",
     });
-});
+};
 export { register, login, getMe, updateUser, deleteUser, changePassword, logout, };

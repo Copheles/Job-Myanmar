@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import Job from "../models/Job.js";
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
@@ -14,7 +5,7 @@ import { BadRequestError, NotFoundError } from "../errors/index.js";
 import { checkPermissions } from "../utils/checkPermissions.js";
 import mongoose from "mongoose";
 import moment from "moment";
-const createJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createJob = async (req, res) => {
     const { position, company, jobLocation, jobDescription, aboutCompany, jobType } = req.body;
     if (!position ||
         !company ||
@@ -25,10 +16,10 @@ const createJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         throw new BadRequestError("Please provide all values");
     }
     req.body.createdBy = req.user.userId;
-    const job = yield Job.create(req.body);
+    const job = await Job.create(req.body);
     res.status(StatusCodes.CREATED).json(job);
-});
-const getAllJobs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const getAllJobs = async (req, res) => {
     const { status, jobType, sort, search } = req.query;
     const queryObject = {};
     // add stuff based on condition
@@ -66,8 +57,8 @@ const getAllJobs = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const skip = (page - 1) * limit;
     result = result.skip(skip).limit(limit);
     // chain sort conditions
-    const jobs = yield result;
-    const totalJobs = yield Job.countDocuments(queryObject);
+    const jobs = await result;
+    const totalJobs = await Job.countDocuments(queryObject);
     const numOfPages = Math.ceil(totalJobs / limit);
     console.log(totalJobs);
     res.status(StatusCodes.OK).json({
@@ -75,10 +66,10 @@ const getAllJobs = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         jobs,
         numOfPages,
     });
-});
-const getSingleJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const getSingleJob = async (req, res) => {
     const { id: jobId } = req.params;
-    const job = yield Job.findOne({
+    const job = await Job.findOne({
         _id: jobId,
     }).populate("comments");
     if (!job) {
@@ -88,16 +79,16 @@ const getSingleJob = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         job,
         comments: job.comments,
     });
-});
-const getRelatedJobs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const getRelatedJobs = async (req, res) => {
     const { id: jobId } = req.params;
-    const job = yield Job.findById(jobId);
+    const job = await Job.findById(jobId);
     if (!job) {
         throw new NotFoundError(`No job with id: ${jobId}`);
     }
     const position = job.position;
     // find job with related postion by exclude
-    const jobs = yield Job.find({
+    const jobs = await Job.find({
         position: {
             $regex: position,
             $options: "i",
@@ -110,23 +101,23 @@ const getRelatedJobs = (req, res) => __awaiter(void 0, void 0, void 0, function*
         count: jobs.length,
         jobs,
     });
-});
-const getJobsByUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const getJobsByUser = async (req, res) => {
     const { userId } = req.params;
-    const user = yield User.findById(userId);
+    const user = await User.findById(userId);
     if (!user) {
         throw new NotFoundError(`No user with id: ${userId}`);
     }
-    const jobs = yield Job.find({
+    const jobs = await Job.find({
         createdBy: userId,
     });
     res.status(StatusCodes.OK).json({
         count: jobs.length,
         jobs,
     });
-});
-const showStats = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let stats = yield Job.aggregate([
+};
+const showStats = async (req, res) => {
+    let stats = await Job.aggregate([
         {
             $match: {
                 createdBy: new mongoose.Types.ObjectId(req.user.userId),
@@ -151,7 +142,7 @@ const showStats = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         interview: stats.interview || 0,
         declined: stats.declined || 0,
     };
-    let monthlyApplication = yield Job.aggregate([
+    let monthlyApplication = await Job.aggregate([
         {
             $match: {
                 createdBy: new mongoose.Types.ObjectId(req.user.userId),
@@ -199,8 +190,8 @@ const showStats = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         defaultStats,
         monthlyApplication,
     });
-});
-const updateJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const updateJob = async (req, res) => {
     const { id: jobId } = req.params;
     const { company, position, jobLocation, jobDescription, aboutCompany } = req.body;
     if (!position ||
@@ -210,7 +201,7 @@ const updateJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         !aboutCompany) {
         throw new BadRequestError("Please provide all values");
     }
-    const job = yield Job.findOne({
+    const job = await Job.findOne({
         _id: jobId,
     });
     if (!job) {
@@ -220,7 +211,7 @@ const updateJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(typeof req.user.userId);
     console.log(typeof job.createdBy);
     checkPermissions(req.user, job.createdBy);
-    const updatedJob = yield Job.findOneAndUpdate({
+    const updatedJob = await Job.findOneAndUpdate({
         _id: jobId,
     }, req.body, {
         new: true,
@@ -232,19 +223,19 @@ const updateJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(StatusCodes.OK).json({
         updatedJob,
     });
-});
-const deleteJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const deleteJob = async (req, res) => {
     const { id: jobId } = req.params;
-    const job = yield Job.findOne({
+    const job = await Job.findOne({
         _id: jobId,
     });
     if (!job) {
         throw new NotFoundError(`No job with id : ${jobId}`);
     }
     checkPermissions(req.user, job.createdBy);
-    yield job.remove();
+    await job.remove();
     res.status(StatusCodes.OK).json({
         message: `Success! job removed`,
     });
-});
+};
 export { createJob, deleteJob, getAllJobs, updateJob, getSingleJob, getRelatedJobs, showStats, getJobsByUser, };
