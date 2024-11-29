@@ -4,29 +4,46 @@ import { BadRequestError, NotFoundError } from "../errors/index.js";
 
 import Job from "../models/Job.js";
 import User from "../models/User.js";
+
 import {
   checkPermissions,
   checkPostOwnerDeleteCmt,
 } from "../utils/checkPermissions.js";
 import { Request, Response } from "express";
+import { io } from "../socket/socket.js";
+import { commentCreate, commentDelete } from "../constants/socketConstants.js";
 
 const createComment = async (req: Request, res: Response) => {
   const { content, parentId, job: jobId } = req.body;
 
+  console.log("reqBody: ", req.body);
+
   if (!content) {
     throw new BadRequestError("Please provide content for comment");
   }
+
   const user: any = await User.findById(req.user.userId);
   const count = await Comment.countDocuments();
+
   req.body.commentBy = req.user.userId;
   req.body.author = user.name;
+
   let comment;
   if (parentId) {
-    comment = await Comment.create(req.body);
+    console.log("parentId exists");
+    const formatData = {
+      content,
+      parentId,
+      commentBy: req.body.commentBy,
+      author: req.body.author,
+    };
+    comment = await Comment.create(formatData);
     let parentCmt: any = await Comment.findByIdAndUpdate(parentId);
+    console.log("comment: ", comment);
     parentCmt.replies.push(comment);
     await parentCmt.save();
   } else {
+    console.log("parentId not exists");
     if (!jobId) {
       const isValidJob = await Job.findOne({
         _id: jobId,
@@ -37,6 +54,13 @@ const createComment = async (req: Request, res: Response) => {
     }
     comment = await Comment.create(req.body);
   }
+
+  const job: any = await Job.findOne({ _id: jobId }).populate("comments");
+  console.log("job: ", job);
+  if (job) {
+    io.to(jobId).emit(commentCreate, { comments: job.comments, jobId });
+  }
+
   res.status(StatusCodes.CREATED).json({
     comment,
     count,
@@ -71,7 +95,7 @@ const getSingleComment = async (req: Request, res: Response) => {
 const updateComment = async (req: Request, res: Response) => {
   const { id: commentId } = req.params;
 
-  const { content } = req.body;
+  const { content, jobId } = req.body;
 
   const comment = await Comment.findOne({
     _id: commentId,
@@ -86,6 +110,12 @@ const updateComment = async (req: Request, res: Response) => {
 
   await comment.save();
 
+  const job: any = await Job.findById(jobId).populate("comments");
+
+  if (job) {
+    io.to(jobId).emit(commentDelete, { comments: job.comments, jobId });
+  }
+
   res.status(StatusCodes.OK).json({
     comment,
   });
@@ -93,6 +123,7 @@ const updateComment = async (req: Request, res: Response) => {
 
 const deleteComment = async (req: Request, res: Response) => {
   const { id: commentId } = req.params;
+  const { jobId } = req.body;
 
   const comment = await Comment.findOne({
     _id: commentId,
@@ -108,6 +139,12 @@ const deleteComment = async (req: Request, res: Response) => {
   }
 
   await comment.remove();
+
+  const job: any = await Job.findById(jobId).populate("comments");
+
+  if (job) {
+    io.to(jobId).emit(commentDelete, { comments: job.comments, jobId });
+  }
 
   res.status(StatusCodes.OK).json({
     message: "Comment deleted!",

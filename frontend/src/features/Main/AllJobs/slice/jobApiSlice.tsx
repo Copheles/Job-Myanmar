@@ -1,4 +1,5 @@
 import { JOB_URL } from "@constants/constants";
+import { socketInstance } from "@hooks/useSocket";
 import { getAllJobQuery, JobResponse } from "@interface/job/job";
 import { apiSlice } from "@redux/apiSlice";
 
@@ -42,6 +43,53 @@ export const jobsApiSlice = apiSlice.injectEndpoints({
       query: (jobId) => ({
         url: JOB_URL + `/${jobId}`,
       }),
+      async onCacheEntryAdded(
+        args,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        try {
+          console.log("Iniital jobId, ", args);
+          await cacheDataLoaded;
+
+
+          socketInstance?.on("comment update", (data: any) => {
+            console.log("Recieved comment update", data);
+
+            if (data.jobId === args) {
+              updateCachedData((draft) => {
+                console.log("Cached args", draft);
+                draft.comments = data.comments;
+              });
+            }
+          });
+
+          socketInstance?.on("comment delete", (data: any) => {
+            console.log("Recieved comment delete", data);
+
+            if (data.jobId === args) {
+              updateCachedData((draft) => {
+                console.log("Cached args", draft);
+                draft.comments = data.comments;
+              });
+            }
+          });
+
+          socketInstance?.on("comment create", (data: any) => {
+            console.log("Recieved comment create ", data);
+
+            if (data.jobId === args) {
+              updateCachedData((draft) => {
+                console.log("Cached args ", draft);
+                draft.comments = data.comments;
+              });
+            }
+          });
+
+          await cacheEntryRemoved;
+        } finally {
+          socketInstance?.off("comment create");
+        }
+      },
       providesTags: (result, error, jobId) => [{ type: "Jobs", id: jobId }],
     }),
     getRelatedJobs: builder.query({
@@ -64,5 +112,5 @@ export const {
   useGetRelatedJobsQuery,
   useDeleteJobMutation,
   useUpdateJobMutation,
-  useGetStatsQuery
+  useGetStatsQuery,
 } = jobsApiSlice;

@@ -13,8 +13,11 @@ import { BadRequestError, NotFoundError } from "../errors/index.js";
 import Job from "../models/Job.js";
 import User from "../models/User.js";
 import { checkPermissions, checkPostOwnerDeleteCmt, } from "../utils/checkPermissions.js";
+import { io } from "../socket/socket.js";
+import { commentCreate, commentDelete } from "../constants/socketConstants.js";
 const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { content, parentId, job: jobId } = req.body;
+    console.log("reqBody: ", req.body);
     if (!content) {
         throw new BadRequestError("Please provide content for comment");
     }
@@ -24,12 +27,21 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     req.body.author = user.name;
     let comment;
     if (parentId) {
-        comment = yield Comment.create(req.body);
+        console.log("parentId exists");
+        const formatData = {
+            content,
+            parentId,
+            commentBy: req.body.commentBy,
+            author: req.body.author,
+        };
+        comment = yield Comment.create(formatData);
         let parentCmt = yield Comment.findByIdAndUpdate(parentId);
+        console.log("comment: ", comment);
         parentCmt.replies.push(comment);
         yield parentCmt.save();
     }
     else {
+        console.log("parentId not exists");
         if (!jobId) {
             const isValidJob = yield Job.findOne({
                 _id: jobId,
@@ -39,6 +51,11 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             }
         }
         comment = yield Comment.create(req.body);
+    }
+    const job = yield Job.findOne({ _id: jobId }).populate("comments");
+    console.log("job: ", job);
+    if (job) {
+        io.to(jobId).emit(commentCreate, { comments: job.comments, jobId });
     }
     res.status(StatusCodes.CREATED).json({
         comment,
@@ -66,7 +83,7 @@ const getSingleComment = (req, res) => __awaiter(void 0, void 0, void 0, functio
 });
 const updateComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id: commentId } = req.params;
-    const { content } = req.body;
+    const { content, jobId } = req.body;
     const comment = yield Comment.findOne({
         _id: commentId,
     });
@@ -76,12 +93,17 @@ const updateComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     checkPermissions(req.user, comment.commentBy);
     comment.content = content;
     yield comment.save();
+    const job = yield Job.findById(jobId).populate("comments");
+    if (job) {
+        io.to(jobId).emit(commentDelete, { comments: job.comments, jobId });
+    }
     res.status(StatusCodes.OK).json({
         comment,
     });
 });
 const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id: commentId } = req.params;
+    const { jobId } = req.body;
     const comment = yield Comment.findOne({
         _id: commentId,
     });
@@ -93,6 +115,10 @@ const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         checkPostOwnerDeleteCmt(req.user, comment.commentBy, job.createdBy);
     }
     yield comment.remove();
+    const job = yield Job.findById(jobId).populate("comments");
+    if (job) {
+        io.to(jobId).emit(commentDelete, { comments: job.comments, jobId });
+    }
     res.status(StatusCodes.OK).json({
         message: "Comment deleted!",
     });

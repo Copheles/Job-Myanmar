@@ -39,7 +39,6 @@ const CommentSchema = new Schema(
     job: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Job",
-      required: true,
     },
     replies: [
       {

@@ -79,9 +79,7 @@ export default function JobDetails({ job }: Props) {
   return (
     <Box>
       <Box
-        bg={mode("white", "gray.700")}
-        p={{ base: 2, md: 4 }}
-        px={{ base: 4, md: 6 }}
+      
         pt={5}
       >
         <Flex justifyContent="space-between">

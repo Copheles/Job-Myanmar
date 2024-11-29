@@ -24,7 +24,6 @@ interface Props {
 export default function RelatedJobs({ id, company, aboutCompany }: Props) {
   const { data } = useGetRelatedJobsQuery(id);
 
-  console.log(data);
   return (
     <Box
       px={5}

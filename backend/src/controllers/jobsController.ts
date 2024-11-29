@@ -90,6 +90,7 @@ const getSingleJob = async (req: Request, res: Response) => {
   const job: any = await Job.findOne({
     _id: jobId,
   }).populate("comments");
+
   if (!job) {
     throw new NotFoundError(`No job with id:${jobId}`);
   }

@@ -5,10 +5,8 @@ import {
 
 const checkPermissions = (requestUser: any, resourceUserId: any) => {
   if (requestUser.userId === resourceUserId.toString()) {
-    console.log('yes u can')
     return
   }
-  console.log('no u cant')
   throw new UnAuthenticatedError('Not authorized to access this route')
 }
 

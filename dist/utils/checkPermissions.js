@@ -1,10 +1,8 @@
 import { UnAuthenticatedError } from "../errors/index.js";
 const checkPermissions = (requestUser, resourceUserId) => {
     if (requestUser.userId === resourceUserId.toString()) {
-        console.log('yes u can');
         return;
     }
-    console.log('no u cant');
     throw new UnAuthenticatedError('Not authorized to access this route');
 };
 const checkPostOwnerDeleteCmt = (requestUser, resourceUserId, postOwnerId) => {

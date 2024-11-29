@@ -60,7 +60,7 @@ const FormInput = <TFormValues extends FieldValues>({
           type={showPassword ? "text" : isPassword ? "password" : type}
           name={name}
           fontSize={{ base: 11, lg: 14 }}
-          focusBorderColor={useColorModeValue("teal.500", "teal.200")}
+          focusBorderColor={useColorModeValue("red.500", "red.200")}
           bg={bgColor}
           placeholder={placeholder}
         />

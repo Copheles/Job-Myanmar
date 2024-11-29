@@ -14,7 +14,7 @@ import {
 } from "react-hook-form";
 
 interface Props<TFormValues extends FieldValues> {
-  labelText: string;
+  labelText?: string;
   name: Path<TFormValues>;
   placeholder?: string;
   error?: FieldError;
@@ -39,6 +39,7 @@ export default function FormTextArea<TFormValues extends FieldValues>({
         placeholder={placeholder}
         {...register(name, validationRules)}
         fontSize={{ base: 11, lg: 14 }}
+        focusBorderColor={useColorModeValue("red.500", "red.200")}
         name={name}
         isInvalid={!!error}
         bg={bg}
