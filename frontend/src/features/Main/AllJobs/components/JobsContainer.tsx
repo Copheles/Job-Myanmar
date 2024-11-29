@@ -42,7 +42,7 @@ export default function JobsContainer({ sort, status, jobType }: Props) {
           : data?.jobs?.map((job: any) => <JobCard key={job._id} job={job} />)}
       </SimpleGrid>
       <Flex justifyContent="flex-end">
-        <Pagination numOfPages={data?.numOfPages} />
+        <Pagination numOfPages={data?.numOfPages || 1} />
       </Flex>
     </>
   );

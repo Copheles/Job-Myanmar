@@ -22,21 +22,21 @@ export default function StatsContainer({ defaultStats }: Props) {
   const stats: StatsBox[] = [
     {
       title: "Pending applications",
-      count: defaultStats.pending || 0,
+      count: defaultStats?.pending || 0,
       icon: <FaSuitcaseRolling size={25} />,
       color: "#e9b949",
       bcg: "#fcefc7",
     },
     {
       title: "Interviews scheduled",
-      count: defaultStats.interview || 0,
+      count: defaultStats?.interview || 0,
       icon: <FaCalendarCheck size={25} />,
       color: "#647acb",
       bcg: "#fcefc7",
     },
     {
       title: "Jobs declined",
-      count: defaultStats.declined || 0,
+      count: defaultStats?.declined || 0,
       icon: <FaBug size={25} />,
       color: "#d66a6a",
       bcg: "#fcefc7",

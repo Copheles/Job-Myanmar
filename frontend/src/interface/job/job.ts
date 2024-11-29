@@ -1,7 +1,7 @@
 import { User } from "@interface/user/user";
 
 export interface getAllJobQuery {
-  search: string;
+  search?: string;
   status: string;
   jobType: string;
   sort: string;

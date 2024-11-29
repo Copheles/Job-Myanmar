@@ -35,9 +35,7 @@ export const jobsApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: (result, error, { jobId }) => [
-        { type: "Jobs", id: jobId },
-      ],
+      invalidatesTags: (_, __, { jobId }) => [{ type: "Jobs", id: jobId }],
     }),
     getSingleJob: builder.query({
       query: (jobId) => ({
@@ -50,7 +48,6 @@ export const jobsApiSlice = apiSlice.injectEndpoints({
         try {
           console.log("Iniital jobId, ", args);
           await cacheDataLoaded;
-
 
           socketInstance?.on("comment update", (data: any) => {
             console.log("Recieved comment update", data);
@@ -90,7 +87,7 @@ export const jobsApiSlice = apiSlice.injectEndpoints({
           socketInstance?.off("comment create");
         }
       },
-      providesTags: (result, error, jobId) => [{ type: "Jobs", id: jobId }],
+      providesTags: (_, __, {jobId}) => [{ type: "Jobs", id: jobId }],
     }),
     getRelatedJobs: builder.query({
       query: (jobId) => ({

@@ -25,7 +25,7 @@ export default function StatsPage() {
         </Box>
       ) : (
         <Box bg={mode("white", "gray.700")}>
-          <StatsContainer defaultStats={data.defaultStats} />
+          <StatsContainer defaultStats={data?.defaultStats} />
           {data?.monthlyApplication.length > 0 && (
             <ChartsContainer monthlyApplication={data?.monthlyApplication} />
           )}
