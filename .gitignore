@@ -8,7 +8,7 @@ node_modules/
 /build
 .env
 /dist
-dist
+
 
 .env_local
 .env.development.env_local
