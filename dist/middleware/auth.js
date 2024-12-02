@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 const auth = async (req, res, next) => {
     let token;
     const authHeader = req.headers.authorization;
-    if (authHeader || (authHeader === null || authHeader === void 0 ? void 0 : authHeader.startsWith("Bearer"))) {
+    if (authHeader || authHeader?.startsWith("Bearer")) {
         token = authHeader.split(" ")[1];
     }
     else if (req.cookies.jwt) {

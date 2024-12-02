@@ -34,7 +34,6 @@ const CommentSchema = new Schema({
 });
 // Static method to calculate the number of comments
 CommentSchema.statics.calculateNumOfCmt = async function (jobId) {
-    var _a;
     const results = await this.aggregate([
         {
             $match: {
@@ -51,7 +50,7 @@ CommentSchema.statics.calculateNumOfCmt = async function (jobId) {
         },
     ]);
     try {
-        await mongoose.model("Job").findOneAndUpdate({ _id: jobId }, { numOfComments: ((_a = results[0]) === null || _a === void 0 ? void 0 : _a.numOfComments) || 0 });
+        await mongoose.model("Job").findOneAndUpdate({ _id: jobId }, { numOfComments: results[0]?.numOfComments || 0 });
     }
     catch (error) {
         console.log(error);
