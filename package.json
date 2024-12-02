@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "build": "npx tsc && npm install --prefix frontend && npm run build --prefix frontend",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend",
     "start": "node dist/server.js",
     "server": "nodemon dist/server.js",
     "watch": "tsc -w",
