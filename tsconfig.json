@@ -5,8 +5,10 @@
     "moduleResolution": "Node",
     "outDir": "dist",
     "rootDir": "backend/src",
+
     "strict": true,
     "esModuleInterop": true,
+
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
