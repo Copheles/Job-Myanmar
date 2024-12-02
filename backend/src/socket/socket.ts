@@ -1,7 +1,6 @@
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
-import { joinRoom, leaveRoom } from "../constants/socketConstants.js";
 
 const app = express();
 
@@ -16,11 +15,11 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("newConnection", socket.id);
 
-  socket.on(joinRoom, (data) => {
+  socket.on("join room", (data) => {
     socket.join(data.room);
   });
 
-  socket.on(leaveRoom, (data) => {
+  socket.on("leave room", (data) => {
     socket.leave(data.room);
   });
 });

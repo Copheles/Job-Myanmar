@@ -11,7 +11,7 @@ import {
 } from "../utils/checkPermissions.js";
 import { Request, Response } from "express";
 import { io } from "../socket/socket.js";
-import { commentCreate, commentDelete } from "../constants/socketConstants.js";
+
 
 const createComment = async (req: Request, res: Response) => {
   const { content, parentId, job: jobId } = req.body;
@@ -58,7 +58,7 @@ const createComment = async (req: Request, res: Response) => {
   const job: any = await Job.findOne({ _id: jobId }).populate("comments");
   console.log("job: ", job);
   if (job) {
-    io.to(jobId).emit(commentCreate, { comments: job.comments, jobId });
+    io.to(jobId).emit('comment create', { comments: job.comments, jobId });
   }
 
   res.status(StatusCodes.CREATED).json({
@@ -113,7 +113,7 @@ const updateComment = async (req: Request, res: Response) => {
   const job: any = await Job.findById(jobId).populate("comments");
 
   if (job) {
-    io.to(jobId).emit(commentDelete, { comments: job.comments, jobId });
+    io.to(jobId).emit('comment update', { comments: job.comments, jobId });
   }
 
   res.status(StatusCodes.OK).json({
@@ -143,7 +143,7 @@ const deleteComment = async (req: Request, res: Response) => {
   const job: any = await Job.findById(jobId).populate("comments");
 
   if (job) {
-    io.to(jobId).emit(commentDelete, { comments: job.comments, jobId });
+    io.to(jobId).emit('comment delete', { comments: job.comments, jobId });
   }
 
   res.status(StatusCodes.OK).json({

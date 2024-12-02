@@ -5,7 +5,6 @@ import Job from "../models/Job.js";
 import User from "../models/User.js";
 import { checkPermissions, checkPostOwnerDeleteCmt, } from "../utils/checkPermissions.js";
 import { io } from "../socket/socket.js";
-import { commentCreate, commentDelete } from "../constants/socketConstants.js";
 const createComment = async (req, res) => {
     const { content, parentId, job: jobId } = req.body;
     console.log("reqBody: ", req.body);
@@ -46,7 +45,7 @@ const createComment = async (req, res) => {
     const job = await Job.findOne({ _id: jobId }).populate("comments");
     console.log("job: ", job);
     if (job) {
-        io.to(jobId).emit(commentCreate, { comments: job.comments, jobId });
+        io.to(jobId).emit('comment create', { comments: job.comments, jobId });
     }
     res.status(StatusCodes.CREATED).json({
         comment,
@@ -86,7 +85,7 @@ const updateComment = async (req, res) => {
     await comment.save();
     const job = await Job.findById(jobId).populate("comments");
     if (job) {
-        io.to(jobId).emit(commentDelete, { comments: job.comments, jobId });
+        io.to(jobId).emit('comment update', { comments: job.comments, jobId });
     }
     res.status(StatusCodes.OK).json({
         comment,
@@ -108,7 +107,7 @@ const deleteComment = async (req, res) => {
     await comment.remove();
     const job = await Job.findById(jobId).populate("comments");
     if (job) {
-        io.to(jobId).emit(commentDelete, { comments: job.comments, jobId });
+        io.to(jobId).emit('comment delete', { comments: job.comments, jobId });
     }
     res.status(StatusCodes.OK).json({
         message: "Comment deleted!",
