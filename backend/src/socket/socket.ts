@@ -11,6 +11,7 @@ const io = new Server(server, {
     origin: ["http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   },
+  transports: ["websocket", "polling"],
 });
 
 io.on("connection", (socket) => {
