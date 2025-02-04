@@ -5,6 +5,7 @@ import 'express-async-errors'
 import morgan from 'morgan'
 import path from 'path'
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import mongoose from 'mongoose'
 import { app, server } from './socket/socket.js'
 
@@ -29,9 +30,16 @@ if(process.env.NODE_ENV === 'production'){
   app.use(morgan('dev'))
 }
 
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || "http://localhost:5173", // Change this to match your frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+
 app.use(express.json({ limit: '5mb'}))
 app.use(express.urlencoded({ extended: true}))
 app.use(cookieParser())
+app.use(cors(corsOptions))
 
 
 app.use('/api/v1/auth', authRouter)
