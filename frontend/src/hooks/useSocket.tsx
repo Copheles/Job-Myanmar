@@ -9,7 +9,7 @@ export const useSocket = () => {
 
   const initializeSocket = () => {
     if (!socketInstance && userInfo) {
-      socketInstance = io("http://localhost:5000", {
+      socketInstance = io("https://job-myanmar.onrender.com", {
         query: {
           id: userInfo.id,
         },
