@@ -9,7 +9,7 @@
     "start": "node dist/server.js",
     "server": "nodemon dist/server.js",
     "watch": "tsc -w",
-    "client": "npm start --prefix client",
+    "client": "npm run dev --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
