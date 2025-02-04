@@ -13,8 +13,6 @@ export const useSocket = () => {
         query: {
           id: userInfo.id,
         },
-        transports: ["websocket", "polling"],
-        withCredentials: true,
       });
     }
 

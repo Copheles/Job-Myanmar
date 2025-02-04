@@ -31,9 +31,7 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173", // Change this to match your frontend URL
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
+  origin: process.env.FRONTEND_URL || "http://localhost:5173"
 };
 
 app.use(express.json({ limit: '5mb'}))
