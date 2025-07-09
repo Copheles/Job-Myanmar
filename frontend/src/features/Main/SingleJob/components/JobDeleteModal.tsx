@@ -2,6 +2,7 @@ import { Button, ModalFooter } from "@chakra-ui/react";
 import { closeModal } from "@components/modal/modalSlice";
 import { useDeleteJobMutation } from "@features/Main/AllJobs/slice/jobApiSlice";
 import useCustomToast from "@hooks/useCustomToast";
+import useLanguage from "@hooks/useLanguage";
 import { useAppDispatch } from "@redux/hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function JobDeleteModal({ id }: Props) {
+  const { language } = useLanguage();
   const [deleteJob] = useDeleteJobMutation();
 
   const { customToast } = useCustomToast();
@@ -28,7 +30,7 @@ export default function JobDeleteModal({ id }: Props) {
         description: "Successfully deleted",
         status: "success",
       });
-      dispatch(closeModal())
+      dispatch(closeModal());
       navigate("/");
     } catch (error: any) {
       customToast({
@@ -42,10 +44,10 @@ export default function JobDeleteModal({ id }: Props) {
   return (
     <ModalFooter>
       <Button colorScheme="gray" mr={3} onClick={handleClose}>
-        Close
+        {language.deleteModal.closeBtnText}
       </Button>
       <Button colorScheme="red" onClick={handleDelete}>
-        Delete
+        {language.deleteModal.deleteBtnText}
       </Button>
     </ModalFooter>
   );

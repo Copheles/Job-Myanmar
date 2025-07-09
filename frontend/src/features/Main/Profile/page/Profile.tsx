@@ -11,9 +11,13 @@ import {
 import { useState } from "react";
 import ProfileUpdate from "../components/ProfileUpdate";
 import ChangePassword from "../components/ChangePassword";
+import useLanguage from "@hooks/useLanguage";
+import ThemeSwitcher from "@components/ThemeSwitcher";
 
 export default function Profile() {
   const [, setActiveTab] = useState(0);
+
+  const { language } = useLanguage();
 
   const handleTabChange = (index: number) => {
     setActiveTab(index);
@@ -29,8 +33,13 @@ export default function Profile() {
         <Box flex={1} mx={2} mb={{ base: 10, lg: 0 }}>
           <Tabs onChange={handleTabChange}>
             <TabList>
-              <Tab>Profile</Tab>
-              <Tab>Settings</Tab>
+              <Tab fontSize={{ base: 12, md: 15 }}>
+                {language.profilePage.profileTab}
+              </Tab>
+              <Tab fontSize={{ base: 12, md: 15 }}>
+                {language.profilePage.settingTab}
+              </Tab>
+  
             </TabList>
 
             <TabPanels>

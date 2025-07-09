@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.13.0",
     "@reduxjs/toolkit": "^2.3.0",
     "axios": "^1.7.7",
+    "country-flag-icons": "^1.5.19",
     "framer-motion": "^11.11.10",
     "html-react-parser": "^5.1.18",
     "jodit-react": "^4.1.2",

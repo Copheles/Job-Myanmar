@@ -1,7 +1,6 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import Logo from "@components/Logo";
 import NavLinks from "./NavLinks";
-import ToggleColor from "@components/ToggleColor";
 
 type Props = {
   showSideBar: boolean
@@ -36,8 +35,9 @@ export default function BigSidebBar({ showSideBar}: Props) {
       >
         <NavLinks />
       </Box>
-
-      <ToggleColor />
+      <Box>
+  
+      </Box>
     </Box>
   );
 }

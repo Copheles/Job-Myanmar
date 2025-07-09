@@ -19,6 +19,7 @@ import { FaLocationArrow, FaUserAlt } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import useCustomToast from "@hooks/useCustomToast";
 import { setCrendials } from "@features/Auth/slice/authSlice";
+import useLanguage from "@hooks/useLanguage";
 
 interface IUserUpdate {
   email: string;
@@ -33,7 +34,7 @@ export default function ProfileUpdate() {
   const [updateProfile] = useUpdateProfileMutation();
 
   const date = moment(profile?.user?.createdAt).format("MMM Do, YYYY");
-
+  const { language } = useLanguage();
   const { customToast } = useCustomToast();
 
   const dispatch = useAppDispatch();
@@ -85,15 +86,15 @@ export default function ProfileUpdate() {
       >
         <Box textAlign="center" mb={5}>
           <Avatar size="lg" alignItems="center" mb={5} />
-          <Heading textAlign="center" fontSize={{ base: "24px" }} mb={3}>
+          <Heading textAlign="center" fontSize={{ base: 20, md: 24 }} mb={3}>
             {profile?.user?.name}
           </Heading>
           <Heading
-            fontSize={{ base: "14px" }}
+            fontSize={{ base: "10px" }}
             textAlign="center"
             color={mode("gray.500", "gray.500")}
           >
-            Joined on {date}
+            {language.profilePage.joined} {date}
           </Heading>
         </Box>
       </Flex>
@@ -122,7 +123,7 @@ export default function ProfileUpdate() {
             },
           }}
           icon={<FaUserAlt />}
-          labelText="Name"
+          labelText={language.authFormLabel.name}
         />
         <FormRow
           type="email"
@@ -136,7 +137,7 @@ export default function ProfileUpdate() {
               message: "Email is invalid",
             },
           }}
-          labelText="Email"
+          labelText={language.authFormLabel.email}
           icon={<EmailIcon />}
         />
         <FormRow
@@ -147,7 +148,7 @@ export default function ProfileUpdate() {
           validationRules={{
             required: "Location is required",
           }}
-          labelText="Location"
+          labelText={language.profilePage.location}
           icon={<FaLocationArrow />}
         />
 
@@ -157,8 +158,9 @@ export default function ProfileUpdate() {
           mt={{ base: 0, md: 8 }}
           mb={5}
           type="submit"
+          fontSize={{ base: 12, md: 16 }}
         >
-          Save Changes
+          {language.profilePage.saveBtn}
         </Button>
       </SimpleGrid>
     </Flex>

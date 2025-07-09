@@ -24,6 +24,7 @@ import {
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "@redux/hooks";
+import useLanguage from "@hooks/useLanguage";
 
 interface Comment {
   author: string;
@@ -54,6 +55,7 @@ interface EditCommentFormValues {
 
 export default function Comment({ comment, ml, owner }: IComment) {
   const { id } = useParams();
+  const { language } = useLanguage();
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const { userInfo } = useAppSelector((state) => state.auth);
   const { createdAt, author, content, replies } = comment;
@@ -164,7 +166,7 @@ export default function Comment({ comment, ml, owner }: IComment) {
       <Flex justifyContent="space-between">
         <Flex alignItems="center">
           <Avatar size="sm" mr={5} />
-          <Text fontWeight="bold">
+          <Text fontWeight="semibold" fontSize={{ base: 13, md: 17}}>
             {author}
             <Text
               as="span"
@@ -172,6 +174,7 @@ export default function Comment({ comment, ml, owner }: IComment) {
               color={mode("gray.500", "gray.500")}
               fontWeight="thin"
               display="inline"
+              fontSize={{ base: 11, md: 16}}
             >
               {timestamp}
             </Text>
@@ -198,18 +201,20 @@ export default function Comment({ comment, ml, owner }: IComment) {
               <PopoverBody display="flex" flexDirection="column">
                 <Button
                   variant="ghost"
-                  fontWeight="thin"
+                  fontWeight="medium"
                   onClick={handleDelete}
+                  fontSize={{ base: 12, md: 16}}
                 >
-                  Delete
+                  {language.singleJobText.commentDelete}
                 </Button>
                 {isCommentOwner && (
                   <Button
                     variant="ghost"
-                    fontWeight="thin"
+                    fontWeight="medium"
                     onClick={() => setIsEditing(true)}
+                     fontSize={{ base: 12, md: 16}}
                   >
-                    Edit
+                    {language.singleJobText.commentEdit}
                   </Button>
                 )}
               </PopoverBody>
@@ -247,7 +252,7 @@ export default function Comment({ comment, ml, owner }: IComment) {
           </Flex>
         </Flex>
       ) : (
-        <Text ml="50px">{content}</Text>
+        <Text ml="50px" fontSize={{ base: 12, md: 15}}>{content}</Text>
       )}
 
       {isReplyOpen && (

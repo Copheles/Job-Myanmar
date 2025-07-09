@@ -14,6 +14,8 @@ import { useGetRelatedJobsQuery } from "@features/Main/AllJobs/slice/jobApiSlice
 import { BsFacebook, BsGithub, BsTwitter } from "react-icons/bs";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import RelatedJobCard from "./RelatedJobCard";
+import useLanguage from "@hooks/useLanguage";
+import { useAppSelector } from "@redux/hooks";
 
 interface Props {
   id: string;
@@ -23,7 +25,8 @@ interface Props {
 
 export default function RelatedJobs({ id, company, aboutCompany }: Props) {
   const { data } = useGetRelatedJobsQuery(id);
-
+  const { currentLanguage } = useAppSelector((state) => state.language);
+  const { language } = useLanguage();
   return (
     <Box
       px={5}
@@ -53,13 +56,23 @@ export default function RelatedJobs({ id, company, aboutCompany }: Props) {
             bg={mode("red.500", "red.200")}
             flex={1}
           ></Box>
-          <Heading
-            fontSize={{ base: "20px", md: "25px" }}
-            fontWeight="thin"
-            textAlign="center"
-          >
-            About {company}
-          </Heading>
+          {currentLanguage === "mm" ? (
+            <Heading
+              fontSize={{ base: 17, md: 20 }}
+              fontWeight="medium"
+              textAlign="center"
+            >
+              {company} {language.singleJobText.aboutLabel}
+            </Heading>
+          ) : (
+            <Heading
+              fontSize={{ base: 17, md: 20 }}
+              fontWeight="thin"
+              textAlign="center"
+            >
+              {language.singleJobText.aboutLabel} {company}
+            </Heading>
+          )}
           <Box
             as="span"
             w={20}
@@ -76,7 +89,7 @@ export default function RelatedJobs({ id, company, aboutCompany }: Props) {
             color="white"
           />
         </Flex>
-        <Text mt={10} textAlign="center">
+        <Text mt={10} textAlign="center" fontSize={{ base: 14, md: 17 }}>
           {aboutCompany}
         </Text>
       </Box>
@@ -107,8 +120,8 @@ export default function RelatedJobs({ id, company, aboutCompany }: Props) {
         gap={5}
         mt={10}
       >
-        <Heading fontSize={{ base: "20px", md: "25px" }} fontWeight="thin">
-          Similar Jobs
+        <Heading fontSize={{ base: 12, md: 18 }} fontWeight="thin">
+          {language.singleJobText.similarJobs}
         </Heading>
         <Link
           as={ReactLink}
@@ -117,14 +130,15 @@ export default function RelatedJobs({ id, company, aboutCompany }: Props) {
           display="flex"
           alignItems="center"
           gap={2}
+          fontSize={{ base: 12, md: 18 }}
         >
-          views all jobs <FaLongArrowAltRight />
+          {language.singleJobText.viewAllJobs} <FaLongArrowAltRight />
         </Link>
       </Flex>
 
       <Box mt={8}>
         {data?.jobs.length === 0 ? (
-          <Text>No Jobs Found</Text>
+          <Text fontSize={{ base: 12, md: 15 }}>{language.singleJobText.notJobsFound}</Text>
         ) : (
           data?.jobs.map((job: any) => (
             <RelatedJobCard key={job._id} job={job} />

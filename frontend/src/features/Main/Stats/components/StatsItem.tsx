@@ -27,7 +27,7 @@ export default function StatsItem({
         <Heading>{count}</Heading>
         {icon}
       </Flex>
-      <Heading fontSize={{ base: 15, lg: 20 }}>{title}</Heading>
+      <Heading fontSize={{ base: 13, lg: 18 }}>{title}</Heading>
     </Box>
   );
 }

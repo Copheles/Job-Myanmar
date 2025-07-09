@@ -19,6 +19,7 @@ import {
 } from "@features/Main/AllJobs/slice/jobApiSlice";
 import useCustomToast from "@hooks/useCustomToast";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import useLanguage from "@hooks/useLanguage";
 
 interface FormValues {
   position: string;
@@ -32,11 +33,10 @@ interface FormValues {
 
 export default function AddJobPage() {
   const [searchParams] = useSearchParams();
+  const { language } = useLanguage();
   const id = searchParams.get("id");
 
   const { data } = useGetSingleJobQuery(id);
-
-  console.log("data", data);
 
   const [isJobEditing] = useState(id !== null);
 
@@ -120,13 +120,15 @@ export default function AddJobPage() {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Heading fontSize={{ base: "20px", md: "30px" }}>
-        {isJobEditing ? "Editing Job" : "Add Job"}
+        {isJobEditing
+          ? language.editPage.editHeader
+          : language.editPage.addHeader}
       </Heading>
       <SimpleGrid mt={10} columns={{ md: 2, lg: 3 }} gap={5}>
         <FormRow
           type="text"
           name="position"
-          labelText="Position"
+          labelText={language.editPage.position}
           register={register}
           error={errors.position}
           validationRules={{
@@ -136,7 +138,7 @@ export default function AddJobPage() {
         <FormRow
           type="text"
           name="company"
-          labelText="Company"
+          labelText={language.editPage.company}
           register={register}
           error={errors.company}
           validationRules={{
@@ -146,7 +148,7 @@ export default function AddJobPage() {
         <FormRow
           type="text"
           name="location"
-          labelText="Location"
+          labelText={language.editPage.location}
           register={register}
           error={errors.location}
           validationRules={{
@@ -154,19 +156,19 @@ export default function AddJobPage() {
           }}
         />
         <SelectField
-          labelText="Status"
+          labelText={language.editPage.status}
           name="status"
           options={["pending", "interview", "declined"]}
           register={register}
         />
         <SelectField
-          labelText="Job Type"
+          labelText={language.editPage.jobType}
           name="jobType"
           options={["full-time", "part-time", "remote", "internship"]}
           register={register}
         />
         <FormTextArea
-          labelText="About Company"
+          labelText={language.editPage.aboutCompany}
           name="aboutCompany"
           register={register}
           validationRules={{
@@ -181,11 +183,11 @@ export default function AddJobPage() {
         control={control}
       />
       <Flex gap={5}>
-        <Button w="full" type="submit" colorScheme="red">
-          {isJobEditing ? "Edit" : "Submit"}
+        <Button w="full" type="submit" colorScheme="red" fontSize={{ base: 12, md: 16}}>
+          {isJobEditing ? language.editPage.editButton : language.editPage.submit}
         </Button>
-        <Button w="full" onClick={handleClear}>
-          Back
+        <Button w="full" onClick={handleClear} fontSize={{ base: 12, md: 16}}>
+          { language.editPage.back}
         </Button>
       </Flex>
     </Box>

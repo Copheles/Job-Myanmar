@@ -5,6 +5,8 @@ import {
   Flex,
   Heading,
   SimpleGrid,
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 import { LockIcon } from "@chakra-ui/icons";
@@ -12,6 +14,9 @@ import FormRow from "@components/FormRow";
 import { FieldValues, useForm } from "react-hook-form";
 import { useChangePasswordMutation } from "@features/Auth/slice/authApiSlice";
 import useCustomToast from "@hooks/useCustomToast";
+import useLanguage from "@hooks/useLanguage";
+import ThemeSwitcher from "@components/ThemeSwitcher";
+import LanguageSwitch from "@components/LanguageSwitch";
 
 interface FormValues {
   oldPassword: string;
@@ -29,6 +34,8 @@ const ChangePassword = () => {
   } = useForm<FormValues>({
     mode: "onTouched",
   });
+
+  const { language } = useLanguage();
 
   const [changePassword] = useChangePasswordMutation();
 
@@ -56,15 +63,21 @@ const ChangePassword = () => {
   const newPassword = watch("newPassword");
 
   return (
-    <Flex justifyContent={"flex-start"}>
+    <Flex justifyContent={"flex-start"} direction="column">
       <Box maxW="3xl" pl={{ base: 0, lg: 10 }} w={"full"}>
-        <Heading mt={5} mb={2} fontSize={{ base: 20 }}>
-          Change Password
+        <Heading mt={5} mb={2} fontSize={{ base: 15, md: 20 }}>
+          {language.profilePage.changePasswordHeader}
         </Heading>
-        <Divider />
+        <Text
+          fontSize={{ base: 12, md: 15 }}
+          mt={5}
+          color={useColorModeValue("gray.600", "gray.400")}
+        >
+          {language.profilePage.passwordDescription}
+        </Text>
 
         <SimpleGrid
-          mt={10}
+          mt={{ base: 5, md: 10}}
           columns={{ base: 1, md: 2 }}
           gap={3}
           as="form"
@@ -74,7 +87,7 @@ const ChangePassword = () => {
             type="password"
             name="oldPassword"
             icon={<LockIcon />}
-            labelText="Old password"
+            labelText={language.profilePage.oldPassword}
             register={register}
             error={errors.oldPassword}
             validationRules={{
@@ -94,7 +107,7 @@ const ChangePassword = () => {
             type="password"
             name="newPassword"
             icon={<LockIcon />}
-            labelText="New password"
+            labelText={language.profilePage.newPassword}
             register={register}
             error={errors.newPassword}
             validationRules={{
@@ -114,7 +127,7 @@ const ChangePassword = () => {
             type="password"
             name="confirmNewPassword"
             icon={<LockIcon />}
-            labelText="Confirm new password"
+            labelText={language.profilePage.conFirmPassword}
             register={register}
             error={errors.confirmNewPassword}
             validationRules={{
@@ -139,11 +152,19 @@ const ChangePassword = () => {
             mt={{ base: 0, md: 8 }}
             mb={5}
             type="submit"
+            fontSize={{ base: 12, md: 16 }}
           >
-            Change Password
+            {language.profilePage.changePasswordBtn}
           </Button>
         </SimpleGrid>
-        <Divider />
+      </Box>
+      <Divider />
+      <Box maxW="3xl" pl={{ base: 0, lg: 10 }} mb={5}>
+        <ThemeSwitcher />
+      </Box>
+      <Divider />
+      <Box maxW="3xl" pl={{ base: 0, lg: 10 }}>
+        <LanguageSwitch />
       </Box>
     </Flex>
   );

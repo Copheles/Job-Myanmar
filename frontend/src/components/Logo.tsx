@@ -4,7 +4,7 @@ import logoDark from "../assets/images/logoDark.svg";
 import { useColorModeValue } from "@chakra-ui/react";
 
 type LogoProps = {
-  size: string
+  size?: string
 }
 
 const Logo = ({ size }: LogoProps) => {

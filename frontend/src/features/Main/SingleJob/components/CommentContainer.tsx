@@ -4,6 +4,7 @@ import FormTextArea from "@components/FormTextArea";
 import { useForm } from "react-hook-form";
 import useCustomToast from "@hooks/useCustomToast";
 import { usePostCommentMutation } from "../slice/commentApiSlice";
+import useLanguage from "@hooks/useLanguage";
 
 interface Comment {
   author: string;
@@ -32,6 +33,7 @@ export default function CommenContainer({
   owner,
   jobId,
 }: CommenContainerProps) {
+  const { language } = useLanguage();
   const [postComment] = usePostCommentMutation();
 
   const {
@@ -65,8 +67,8 @@ export default function CommenContainer({
 
   return (
     <Box mt={5} mb={10}>
-      <Heading fontSize={{ base: "25px", md: "30px" }} fontWeight="thin">
-        Comments
+      <Heading fontSize={{ base: 15, md: 20 }} fontWeight="medium">
+        {language.singleJobText.commentLabel}
       </Heading>
       <Box mt={10}>
         {comments.map((comment: Comment) => (
@@ -78,7 +80,7 @@ export default function CommenContainer({
       </Box>
       <Box mt={10} as="form" onSubmit={handleSubmit(onSubmit)}>
         <FormTextArea
-          placeholder="Your comment"
+          placeholder={language.singleJobText.commentPlaceHolder}
           name="comment"
           validationRules={{
             required: "About company is required",
@@ -86,8 +88,8 @@ export default function CommenContainer({
           register={register}
           error={errors.comment}
         />
-        <Button mt={5} colorScheme="red" type="submit">
-          Post
+        <Button mt={5} colorScheme="red" type="submit" fontSize={{ base: 12, md: 16}}>
+          { language.singleJobText.postLabel }
         </Button>
       </Box>
     </Box>

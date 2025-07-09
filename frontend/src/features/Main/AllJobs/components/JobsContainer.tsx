@@ -7,6 +7,7 @@ import { useAppSelector } from "@redux/hooks";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setPage } from "../slice/jobsFilterSlice";
+import useLanguage from "@hooks/useLanguage";
 
 interface Props {
   sort: string;
@@ -16,6 +17,7 @@ interface Props {
 
 export default function JobsContainer({ sort, status, jobType }: Props) {
   const { page } = useAppSelector((state) => state.jobFilter);
+  const { language } = useLanguage();
   const { data, isFetching } = useGetAllJobsQuery({
     sort,
     status,
@@ -32,7 +34,7 @@ export default function JobsContainer({ sort, status, jobType }: Props) {
   return (
     <>
       <Heading mb={5} fontSize={{ base: "15px", md: "20px" }}>
-        {data?.totalJobs} {data?.totalJobs === 1 ? "Job" : "Jobs"} Found
+        {data?.totalJobs} {data?.totalJobs === 1 ? language.allJobsText.job : language.allJobsText.jobs} {language.allJobsText.found}
       </Heading>
       <SimpleGrid columns={{ base: 1, lg: 2 }} gap={5}>
         {isFetching

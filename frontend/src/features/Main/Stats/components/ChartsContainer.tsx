@@ -1,4 +1,5 @@
 import { Flex, Heading, useColorModeValue } from "@chakra-ui/react";
+import useLanguage from "@hooks/useLanguage";
 import {
   ResponsiveContainer,
   BarChart,
@@ -19,13 +20,13 @@ interface Props {
 }
 
 export default function ChartsContainer({ monthlyApplication }: Props) {
-  console.log(monthlyApplication);
+  const { language } = useLanguage();
   const barColor = useColorModeValue("#2F855A", "#68D391");
 
   return (
     <Flex flexDirection="column" alignItems="center">
-      <Heading textAlign="center" mb={7}>
-        Monthly Applications
+      <Heading textAlign="center" mb={7} fontSize={{ base: 17, md: 23}}>
+        {language.statsPage.monthlyApplicationsHeader}
       </Heading>
       <ResponsiveContainer width="100%" height={500}>
         <BarChart

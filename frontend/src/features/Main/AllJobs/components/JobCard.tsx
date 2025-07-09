@@ -63,25 +63,25 @@ export default function JobCard({ job }: { job: any }) {
               size={{ base: "sm", md: "md" }}
             />
             <Box px={{ base: 2, md: 0 }}>
-              <Text>{job.company}</Text>
+              <Text fontWeight='medium' fontSize={{ base: 13, md: 16}}>{job.company}</Text>
             </Box>
           </Flex>
-          <Text color={mode("gray.500", "gray.500")}>{fromNow}</Text>
+          <Text color={mode("gray.500", "gray.500")} fontSize={{ base: 12, md: 14}}>{fromNow}</Text>
         </Flex>
       </CardHeader>
       <Flex ml={5} alignItems="flex-start" direction="column">
-        <Heading size={{ base: "xs", md: "sm" }}>{job.position}</Heading>
-        <Text color={mode("gray.500", "gray.500")} mt={3}>
+        <Heading fontSize={{ base: 13, md: 15 }}>{job.position}</Heading>
+        <Text color={mode("gray.500", "gray.500")} fontSize={{ base: 12, md: 15}} mt={3}>
           Posted by{" "}
           {job.createdBy.name === userInfo?.name ? (
-            <Badge colorScheme="green">you</Badge>
+            <Badge fontSize={{ base: 10, md: 12}} colorScheme="green">you</Badge>
           ) : (
             job.createdBy.name
           )}
         </Text>
       </Flex>
       <CardBody display="flex" flexDir="column" gap={{ base: 3, md: 8 }}>
-        <SimpleGrid columns={{ base: 1, sm: 2 }} gap={{ base: 4, md: 0 }}>
+        <SimpleGrid columns={{ base: 2, sm: 2 }} gap={{ base: 4, md: 0 }}>
           <IconDesign label={job.jobLocation} icon={<FaLocationArrow />} />
           <IconDesign label={job.jobType} icon={<FaBriefcase />} />
         </SimpleGrid>

@@ -10,12 +10,14 @@ import { useAppSelector } from "@redux/hooks";
 import { UseFormRegister } from "react-hook-form";
 import { CgSortAz } from "react-icons/cg";
 import { FormValues } from "../page/AllJobs";
+import useLanguage from "@hooks/useLanguage";
 
 export default function SearchContainer({
   register,
 }: {
   register: UseFormRegister<FormValues>;
 }) {
+  const { language } = useLanguage();
   const { sortOptions, statusOptions, jobTypeOptins } = useAppSelector(
     (state) => state.jobFilter
   );
@@ -38,19 +40,19 @@ export default function SearchContainer({
           >
             <SelectField
               name="searchStatus"
-              labelText="status"
+              labelText={language.searchContainerDropDown.status}
               register={register}
               options={["all", ...statusOptions]}
             />
             <SelectField
               name="searchType"
-              labelText="type"
+              labelText={language.searchContainerDropDown.type}
               register={register}
               options={["all", ...jobTypeOptins]}
             />
             <SelectField
               name="sort"
-              labelText="sort"
+              labelText={language.searchContainerDropDown.sort}
               options={["all", ...sortOptions]}
               register={register}
               icon={<CgSortAz />}

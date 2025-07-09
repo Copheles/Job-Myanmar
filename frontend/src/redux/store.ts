@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./apiSlice";
 import authSliceReducer from "@features/Auth/slice/authSlice";
-import jobsFilterReducer from '@features/Main/AllJobs/slice/jobsFilterSlice';
+import languageReducer from "@features/Landing/slice/languageSlice";
+import jobsFilterReducer from "@features/Main/AllJobs/slice/jobsFilterSlice";
 import modalSliceReducer from "@components/modal/modalSlice";
 
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authSliceReducer,
+    language: languageReducer,
     modal: modalSliceReducer,
     jobFilter: jobsFilterReducer,
   },

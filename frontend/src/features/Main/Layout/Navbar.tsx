@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@redux/hooks";
 import { useLogoutMutation } from "@features/Auth/slice/authApiSlice";
 import { logout } from "@features/Auth/slice/authSlice";
+import useLanguage from "@hooks/useLanguage";
 
 type Props = {
   toggleSidebar: () => void;
@@ -25,6 +26,7 @@ type Props = {
 const Navbar = ({ toggleSidebar }: Props) => {
   const toggleIcon = useColorModeValue("red.500", "red.200");
   const bgColor = useColorModeValue("white", "gray.700");
+  const { language } = useLanguage();
   const [logOut] = useLogoutMutation();
 
   const navigate = useNavigate();
@@ -61,24 +63,31 @@ const Navbar = ({ toggleSidebar }: Props) => {
         _hover={{ bg: "transparent" }}
       />
       <Text fontWeight="200" display={{ base: "none", md: "block" }}>
-        Post your job to attract skilled talents...
+        {language.jobPosting.desktopText}
       </Text>
       <Text fontWeight="200" display={{ base: "block", md: "none" }}>
-        Jobs in Myanmar
+        {language.jobPosting.mobileText}
       </Text>
-
       <Menu>
         <Avatar as={MenuButton} size="sm" mr={2} border="1px solid" />
 
         <MenuList>
-          <MenuItem minH="10px" onClick={() => navigate("/profile")}>
+          <MenuItem
+            minH="10px"
+            onClick={() => navigate("/jobs/profile")}
+            fontSize={{ base: 12, md: 16 }}
+          >
             <Flex justifyContent="space-between" alignItems="center" gap={3}>
-              <FaUserCircle size={20} /> Profile
+              <FaUserCircle size={20} /> {language.avatarDropDownText.profile}
             </Flex>
           </MenuItem>
-          <MenuItem minH="10px" onClick={handleLogout}>
+          <MenuItem
+            minH="10px"
+            onClick={handleLogout}
+            fontSize={{ base: 12, md: 16 }}
+          >
             <Flex justifyContent="space-between" alignItems="center" gap={3}>
-              <BiLogOutCircle size={20} /> Logout
+              <BiLogOutCircle size={20} /> {language.avatarDropDownText.logout}
             </Flex>
           </MenuItem>
         </MenuList>

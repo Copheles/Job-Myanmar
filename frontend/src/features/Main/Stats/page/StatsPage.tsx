@@ -3,8 +3,10 @@ import { useGetStatsQuery } from "@features/Main/AllJobs/slice/jobApiSlice";
 import StatsContainer from "../components/StatsContainer";
 import ChartsContainer from "../components/ChartsContainer";
 
+
 export default function StatsPage() {
   const { data, isLoading } = useGetStatsQuery({});
+ 
 
   return (
     <>

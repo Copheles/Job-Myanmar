@@ -1,0 +1,98 @@
+{
+  "landing": {
+    "headerFront": "Tech Jobs",
+    "headerBack": "In Myanmar",
+    "descriptionText": "Job Myanmar is Myanmar's most widely used online professional job site and digital recruitment platform which effectively matched employers with the most suitable candidates to fill their jobs",
+    "accountRegisteringText": "Login/Register"
+  },
+  "authFormLabel": {
+    "email": "Email",
+    "name": "Name",
+    "password": "Password",
+    "submit": "Submit",
+    "bottomTextFirst": "Not a member yet?",
+    "bottomTextSecond": "Already a member?",
+    "register": "Register",
+    "login": "Login"
+  },
+  "avatarDropDownText": {
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "allJobsText": {
+    "job": "Job",
+    "jobs": "Jobs",
+    "found": "found"
+  },
+  "singleJobText": {
+    "commentLabel": "Comments",
+    "commentPlaceHolder": "Your comment",
+    "commentEdit": "Edit",
+    "commentDelete": "Delete",
+    "postLabel": "Post",
+    "aboutLabel": "About",
+    "similarJobs": "Similar Jobs",
+    "viewAllJobs": "view all jobs",
+    "notJobsFound": "No Job Found"
+  },
+  "deleteModal": {
+    "text": "Deleting Job",
+    "description": "Are you sure to delete the Job?",
+    "closeBtnText": "Close",
+    "deleteBtnText": "Delete"
+  },
+  "editPage": {
+    "addHeader": "Add Job",
+    "editHeader": "Editing Job",
+    "position": "Position",
+    "company": "Company",
+    "location": "Location",
+    "status": "Status",
+    "jobType": "Job Type",
+    "aboutCompany": "About Company",
+    "jobDescription": "Job description details",
+    "editButton": "Edit",
+    "submit": "Submit",
+    "back": "Back"
+  },
+  "profilePage": {
+    "profileTab": "Profile",
+    "settingTab": "Settings",
+    "joined": "Joined on",
+    "location": "Location",
+    "saveBtn": "Save Changes",
+    "changePasswordHeader": "Change Password",
+    "passwordDescription": "Create a strong password with at least 8 characters including letters, numbers, and symbols.",
+    "oldPassword": "Old password",
+    "newPassword": "New Password",
+    "conFirmPassword": "Confirm new password",
+    "changePasswordBtn": "Change Password",
+    "themeHeader": "Interface Theme",
+    "themeDescription": "Customize your workspace theme",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "languageHeader": "Language",
+    "selectLanguage": "Select your preferred language"
+  },
+  "statsPage": {
+    "pendingHeader": "Pending applications",
+    "interviewHeader": "Interviews scheduled",
+    "jobsDeclinedHeader": "Jobs declined",
+    "monthlyApplicationsHeader": "Monthly applications"
+  },
+  "searchContainerDropDown": {
+    "status": "status",
+    "type": "type",
+    "sort": "sort"
+  },
+  "jobPosting": {
+    "desktopText": "Post your job to attract skilled talents...",
+    "mobileText": "Jobs in Myanmar"
+  },
+  "navigation": {
+    "allJobs": "All Jobs",
+    "stats": "Stats",
+    "addJob": "Add Job",
+    "profile": "Profile"
+  }
+}

@@ -30,11 +30,13 @@ export default function FormTextArea<TFormValues extends FieldValues>({
   register,
   validationRules,
 }: Props<TFormValues>) {
-  const errorColor = useColorModeValue("red.600", "red.300")
-  const bg = useColorModeValue('blue.50','gray.700' )
+  const errorColor = useColorModeValue("red.600", "red.300");
+  const bg = useColorModeValue("blue.50", "gray.700");
   return (
     <Box>
-      {labelText && <FormLabel>{labelText}</FormLabel>}
+      {labelText && (
+        <FormLabel fontSize={{ base: 12, lg: 14 }}>{labelText}</FormLabel>
+      )}
       <Textarea
         placeholder={placeholder}
         {...register(name, validationRules)}

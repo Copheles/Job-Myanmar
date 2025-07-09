@@ -25,7 +25,7 @@ export default function SelectField<TFormValues extends FieldValues>({
 }: FormSelectProps<TFormValues>) {
   return (
     <Box>
-      <FormLabel>{labelText}</FormLabel>
+      <FormLabel fontSize={{ base: 12, md: 14}}>{labelText}</FormLabel>
       <Select
         colorScheme="pink"
         {...register(name, validationRules)}
@@ -34,6 +34,7 @@ export default function SelectField<TFormValues extends FieldValues>({
         bg={useColorModeValue("gray.200", "gray.700")}
         name={name}
         icon={icon}
+        fontSize={{ base: 13, md: 15}}
       >
         {options.map((option: string) => (
           <option key={option} value={option}>

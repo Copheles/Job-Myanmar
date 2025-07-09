@@ -1,13 +1,9 @@
-import {
-  Box,
-  FormLabel,
-  SimpleGrid,
-  useColorMode,
-} from "@chakra-ui/react";
+import { Box, FormLabel, SimpleGrid, useColorMode } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Control, Controller } from "react-hook-form";
 import JoditEditor, { IJoditEditorProps } from "jodit-react";
 import ShowTextToHtml from "./ShowTextToHtml";
+import useLanguage from "@hooks/useLanguage";
 
 const defaultConfig: IJoditEditorProps["config"] = {
   readonly: false,
@@ -26,9 +22,8 @@ const defaultConfig: IJoditEditorProps["config"] = {
     "colorPicker",
     "eraser",
     "brush",
-    
   ],
-  
+
   height: 400,
   enter: "p",
   defaultMode: 1,
@@ -72,9 +67,10 @@ export default function RichTextEditor({
   value,
   control,
   name,
-  descriptionText
+  descriptionText,
 }: RichTextEditorProps) {
   const { colorMode } = useColorMode();
+  const { language } = useLanguage();
   const [config, setConfig] = useState(defaultConfig);
 
   useEffect(() => {
@@ -87,7 +83,9 @@ export default function RichTextEditor({
 
   return (
     <Box mt={5}>
-      <FormLabel mb={5}>Job Description Details</FormLabel>
+      <FormLabel mb={5} fontSize={{ base: 12, lg: 14 }}>
+        {language.editPage.jobDescription}
+      </FormLabel>
       <SimpleGrid columns={{ base: 1, lg: 2 }} gap={5} mb={5}>
         <Controller
           name={name}
@@ -106,7 +104,7 @@ export default function RichTextEditor({
             </Box>
           )}
         />
-        <ShowTextToHtml value={descriptionText || ''} />
+        <ShowTextToHtml value={descriptionText || ""} />
       </SimpleGrid>
     </Box>
   );

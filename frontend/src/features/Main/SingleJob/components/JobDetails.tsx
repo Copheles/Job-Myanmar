@@ -14,10 +14,12 @@ import {
   Heading,
   IconButton,
   useColorModeValue as mode,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import IconDesign from "@components/IconDesign";
 import { openModal } from "@components/modal/modalSlice";
 import ShowTextToHtml from "@components/ShowTextToHtml";
+import useLanguage from "@hooks/useLanguage";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import moment from "moment";
 import { FaBriefcase, FaLocationArrow } from "react-icons/fa";
@@ -38,6 +40,8 @@ export default function JobDetails({ job }: Props) {
     createdBy: jobOwner,
     status,
   } = job;
+
+  const { language } = useLanguage();
 
   const { userInfo } = useAppSelector((state) => state.auth);
   const date = moment(createdAt).format("MMM Do, YYYY");
@@ -65,23 +69,20 @@ export default function JobDetails({ job }: Props) {
     dispatch(
       openModal({
         type: "JobDeleteModal",
-        header: "Deleting Job",
-        bodyText: "Are you sure to delete Job?",
+        header: language.deleteModal.text,
+        bodyText: language.deleteModal.description,
         id: job._id,
       })
     );
   };
 
   const handleEdit = () => {
-    navigate(`/add-job?id=${job._id}`)
-  }
+    navigate(`/jobs/add-job?id=${job._id}`);
+  };
 
   return (
     <Box>
-      <Box
-      
-        pt={5}
-      >
+      <Box pt={5}>
         <Flex justifyContent="space-between">
           <Flex alignItems="center">
             <Avatar
@@ -92,8 +93,8 @@ export default function JobDetails({ job }: Props) {
             />
             <Heading
               fontSize={{ base: "14px", md: "18px" }}
-              ml={4}
-              fontWeight="thin"
+              ml={{ base: 2, md: 4 }}
+              fontWeight="medium"
               color={mode("gray.600", "gray.300")}
             >
               {company}
@@ -118,24 +119,20 @@ export default function JobDetails({ job }: Props) {
             </Flex>
           )}
         </Flex>
-        <Heading
-          mt={5}
-          fontSize={{ base: "20px", md: "25px" }}
-          fontWeight={100}
-        >
+        <Heading mt={5} fontSize={{ base: 17, md: 22 }} fontWeight={600}>
           {position}
         </Heading>
-        <Flex
-          gap={5}
-          mt={{ base: 10, md: 12 }}
-          mb={{ base: 10, md: 12 }}
-          direction={{ base: "column", md: "row" }}
+        <SimpleGrid
+          columns={{ base: 2, md: 4 }}
+          spacing={{ base: 3, md: 5 }}
+          mt={{ base: 5, md: 10 }}
+          mb={{ base: 5, md: 10 }}
         >
           <IconDesign label={jobLocation} icon={<FaLocationArrow />} />
           <IconDesign label={jobType} icon={<FaBriefcase />} />
           <IconDesign label={status} icon={statusIcon} />
           <IconDesign label={date} icon={<CalendarIcon />} />
-        </Flex>
+        </SimpleGrid>
         <ShowTextToHtml value={jobDescription} />
         <Divider />
       </Box>

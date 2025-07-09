@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { setCrendials } from "../slice/authSlice";
 import { useNavigate } from "react-router-dom";
 import useCustomToast from "@hooks/useCustomToast";
+import useLanguage from "@hooks/useLanguage";
 
 interface FormValues {
   name?: string;
@@ -28,6 +29,7 @@ interface FormValues {
 
 const AuthPage = () => {
   const { userInfo } = useAppSelector((state) => state.auth);
+  const { language } = useLanguage();
   const [isMember, setIsMember] = useState(false);
   const [login] = useLoginMutation();
   const [register] = useRegisterMutation();
@@ -115,14 +117,18 @@ const AuthPage = () => {
           gap={2}
         >
           <Logo size="30px" />
-          {isMember ? "Login" : "Register"}
+          <Text fontSize={{ base: 26, md: 30 }}>
+            {isMember
+              ? language.authFormLabel.login
+              : language.authFormLabel.register}
+          </Text>
         </Heading>
 
         {!isMember && (
           <FormRow
             type="text"
             name="name"
-            labelText="Name"
+            labelText={language.authFormLabel.name}
             register={registerForm}
             error={errors.name}
             validationRules={{
@@ -151,7 +157,7 @@ const AuthPage = () => {
               message: "Email is invalid",
             },
           }}
-          labelText="Email"
+          labelText={language.authFormLabel.email}
           icon={<EmailIcon />}
         />
         <FormRow
@@ -170,21 +176,25 @@ const AuthPage = () => {
               message: "Password must be at most 100 character",
             },
           }}
-          labelText="Password"
+          labelText={language.authFormLabel.password}
           icon={<LockIcon />}
           isPassword={true}
         />
-        <Button colorScheme="red" type="submit">
-          Submit
+        <Button colorScheme="red" type="submit" fontSize={{ base: 12, md: 16 }}>
+          {language.authFormLabel.submit}
         </Button>
-        <Text mt={10}>
-          {isMember ? "Not a member yet? " : "Already a member?"}{" "}
+        <Text mt={10} fontSize={{ base: 12, md: 16 }}>
+          {isMember
+            ? language.authFormLabel.bottomTextFirst
+            : language.authFormLabel.bottomTextSecond}{" "}
           <Link
             onClick={() => setIsMember(!isMember)}
             color={mode("red.500", "red.200")}
             variant="unstyled"
           >
-            {isMember ? " Register" : " Login"}
+            {isMember
+              ? language.authFormLabel.register
+              : language.authFormLabel.login}
           </Link>
         </Text>
       </Box>

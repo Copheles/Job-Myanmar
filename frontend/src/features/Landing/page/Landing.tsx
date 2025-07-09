@@ -3,13 +3,16 @@ import LandingImageLight from "@assets/images/undraw_interview_light.svg";
 import LandingImageDark from "@assets/images/undraw_interview_dark.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useColorModeValue } from "@chakra-ui/react";
-import ToggleColor from "@components/ToggleColor";
 import Logo from "@components/Logo";
 import { useAppSelector } from "@redux/hooks";
 import { useEffect } from "react";
+import { LanguageSwitcher } from "@components/LanguageSwitcher";
+import useLanguage from "@hooks/useLanguage";
 
 const LandingPage = () => {
   const textColor = useColorModeValue("red.500", "red.200");
+  const { language } = useLanguage();
+
   const image = useColorModeValue(LandingImageLight, LandingImageDark);
   const { userInfo } = useAppSelector((state) => state.auth);
 
@@ -34,7 +37,7 @@ const LandingPage = () => {
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Logo size={"35px"} />
-        <ToggleColor />
+        <LanguageSwitcher />
       </Box>
 
       <Box
@@ -47,21 +50,19 @@ const LandingPage = () => {
         justifyContent="space-between"
       >
         <Box py={4}>
-          <Heading mb={7} flexBasis="100%">
-            Tech Jobs
+          <Heading mb={7} flexBasis="100%" fontSize={{ base: 16, md: 22}}>
+            {language.landing.headerFront}
             <Text display="inline" color={textColor}>
               {" "}
-              In Myanmar
+              {language.landing.headerBack}
             </Text>
           </Heading>
-          <Text mb={7} color="gray.600">
-            Job Myanmar is Myanmar's most widely used online professional job
-            site and digital recruitment platform which effectively matched
-            employers with the most suitable candidates to fill their jobs.
+          <Text mb={7} color="gray.500" fontSize={{ base: 13, md: 17}}>
+            {language.landing.descriptionText}
           </Text>
           <Link to="/register">
-            <Button px={5} colorScheme="red">
-              Login/Register
+            <Button px={5} colorScheme="red" fontSize={{ base: 12, md: 16 }}>
+              {language.landing.accountRegisteringText}
             </Button>
           </Link>
         </Box>
