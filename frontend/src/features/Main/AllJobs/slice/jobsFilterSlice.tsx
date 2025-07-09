@@ -18,7 +18,7 @@ const initialState: InitialStateProps = {
   status: "all",
   jobType: "all",
   sortOptions: ["latest", "oldest", "a-z", "z-a"],
-  statusOptions: ["interview", "declined", "pending"],
+  statusOptions: ["interview", "declined", "pending", "closed"],
   jobTypeOptins: ["full-time", "part-time", "remote", "internship"],
 };
 

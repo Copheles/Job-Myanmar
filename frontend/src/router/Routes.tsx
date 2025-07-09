@@ -12,7 +12,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
   {
-    path: "/landing",
+    path: "/",
     element: <LandingPage />,
   },
   {
@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
     element: <AuthPage />,
   },
   {
-    path: "/",
+    path: "/jobs",
     element: (
       <ProtectedRoute>
         <ModalManager />
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "jobs/:id",
+        path: ":id",
         element: <SingleJob />,
       },
     ],

@@ -24,6 +24,7 @@ const NavLinks = () => {
             sx={{ fontWeight: 'lighter'}}
             _hover={{ marginLeft: '8px', transition: "0.3s ease-in-out all"}}
             _activeLink={{ color: `${color}`}}
+            end
           >
             {icon}
             <Text display={{ base: 'none', md: 'block'}}>{text}</Text>

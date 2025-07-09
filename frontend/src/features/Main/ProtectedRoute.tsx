@@ -12,7 +12,7 @@ export default function ProtectedRoute({ children }: Props) {
 
   useEffect(() => {
     if (!userInfo) {
-      navigate("/landing");
+      navigate("/");
     }
   }, [userInfo, navigate]);
 

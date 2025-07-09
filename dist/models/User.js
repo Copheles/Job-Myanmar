@@ -30,6 +30,11 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         default: "lastName",
     },
+    role: {
+        type: String,
+        enum: ["user", "company", "admin"],
+        default: "user",
+    },
     location: {
         type: String,
         trim: true,

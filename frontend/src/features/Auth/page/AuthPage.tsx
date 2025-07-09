@@ -48,7 +48,7 @@ const AuthPage = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      navigate("/jobs");
     }
   }, [userInfo, navigate]);
 

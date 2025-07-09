@@ -14,7 +14,7 @@ const links: LinkItem[] = [
   {
     id: 1,
     text: "all jobs",
-    path: "/",
+    path: "/jobs",
     icon: <MdQueryStats />,
   },
   {

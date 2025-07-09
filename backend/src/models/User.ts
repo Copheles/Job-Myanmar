@@ -9,8 +9,8 @@ export interface IUser extends Document {
   password: string;
   lastName?: string;
   location?: string;
-  createdAt: Date,
-  updatedAt: Date,
+  createdAt: Date;
+  updatedAt: Date;
   createJWT: () => string;
   comparePassword: (candidatePassword: string) => Promise<boolean>;
 }
@@ -44,6 +44,12 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       default: "lastName",
     },
+    role: {
+      type: String,
+      enum: ["user", "company", "admin"],
+      default: "user",
+    },
+
     location: {
       type: String,
       trim: true,
@@ -81,7 +87,9 @@ UserSchema.methods.createJWT = function () {
   });
 };
 
-UserSchema.methods.comparePassword = async function (candidatePassword: string) {
+UserSchema.methods.comparePassword = async function (
+  candidatePassword: string
+) {
   console.log(this.password);
   const isMatch = await bcrypt.compare(candidatePassword, this.password);
   return isMatch;

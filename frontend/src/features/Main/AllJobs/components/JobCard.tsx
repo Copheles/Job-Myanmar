@@ -41,7 +41,7 @@ export default function JobCard({ job }: { job: any }) {
     );
 
   const handleClick = (id: string) => {
-    navigate(`jobs/${id}`)
+    navigate(`/jobs/${id}`)
   }
 
   return (

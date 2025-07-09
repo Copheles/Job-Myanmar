@@ -1,14 +1,27 @@
 import { Box, Button, Container, Heading, Text, Image } from "@chakra-ui/react";
 import LandingImageLight from "@assets/images/undraw_interview_light.svg";
 import LandingImageDark from "@assets/images/undraw_interview_dark.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useColorModeValue } from "@chakra-ui/react";
 import ToggleColor from "@components/ToggleColor";
 import Logo from "@components/Logo";
+import { useAppSelector } from "@redux/hooks";
+import { useEffect } from "react";
 
 const LandingPage = () => {
   const textColor = useColorModeValue("red.500", "red.200");
   const image = useColorModeValue(LandingImageLight, LandingImageDark);
+  const { userInfo } = useAppSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/jobs");
+    }
+  }, [userInfo, navigate]);
+
+  if (userInfo) return null;
 
   return (
     <Container
