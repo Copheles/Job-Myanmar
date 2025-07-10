@@ -45,7 +45,7 @@ export default function StatsItem({
           <Box p={2} bg={bcg} borderRadius="md" color={color}>
             {icon}
           </Box>
-          <Heading size="xl" color={color}>
+          <Heading fontSize={{ base: 20, md: 25 }} color={color}>
             {count}
           </Heading>
         </Flex>

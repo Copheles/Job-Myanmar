@@ -71,7 +71,7 @@ export default function StatsPage() {
         mb={{ base: 5, md: 10 }}
       >
         <Box
-          bg={mode("gray.50", "gray.900")}
+          bg={mode("gray.50", "gray.800")}
           p={6}
           borderRadius="lg"
           boxShadow="sm"
@@ -102,7 +102,7 @@ export default function StatsPage() {
         </Box>
 
         <Box
-          bg={mode("gray.50", "gray.900")}
+          bg={mode("gray.50", "gray.800")}
           p={6}
           borderRadius="lg"
           boxShadow="sm"
@@ -131,7 +131,7 @@ export default function StatsPage() {
         </Box>
 
         <Box
-          bg={mode("gray.50", "gray.900")}
+          bg={mode("gray.50", "gray.800")}
           p={6}
           borderRadius="lg"
           boxShadow="sm"
@@ -167,7 +167,7 @@ export default function StatsPage() {
       <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={8} mb={8}>
         {/* Monthly Applications Bar Chart */}
         <Box
-          bg={mode("gray.50", "gray.900")}
+          bg={mode("gray.50", "gray.800")}
           p={6}
           borderRadius="lg"
           boxShadow="sm"
@@ -235,7 +235,7 @@ export default function StatsPage() {
 
         {/* Application Status Pie Chart */}
         <Box
-          bg={mode("gray.50", "gray.900")}
+          bg={mode("gray.50", "gray.800")}
           p={6}
           borderRadius="lg"
           boxShadow="sm"
@@ -287,7 +287,7 @@ export default function StatsPage() {
 
       {/* Additional Row - Trend Line Chart */}
       <Box
-        bg={mode("gray.50", "gray.900")}
+        bg={mode("gray.50", "gray.800")}
         p={6}
         borderRadius="lg"
         boxShadow="sm"
@@ -311,10 +311,6 @@ export default function StatsPage() {
               bottom: 20,
             }}
           >
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke={mode("#eee", "#555")}
-            />
             <XAxis
               dataKey="date"
               stroke={mode("#666", "#aaa")}
