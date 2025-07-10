@@ -12,7 +12,6 @@ import { useState } from "react";
 import ProfileUpdate from "../components/ProfileUpdate";
 import ChangePassword from "../components/ChangePassword";
 import useLanguage from "@hooks/useLanguage";
-import ThemeSwitcher from "@components/ThemeSwitcher";
 
 export default function Profile() {
   const [, setActiveTab] = useState(0);

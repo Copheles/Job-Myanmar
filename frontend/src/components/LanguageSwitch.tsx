@@ -1,7 +1,6 @@
 import {
   VStack,
   Text,
-  Divider,
   Flex,
   useColorModeValue,
   Box,
