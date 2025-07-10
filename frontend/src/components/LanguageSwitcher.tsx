@@ -12,13 +12,16 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
-import { toggleLanguage } from "@features/Landing/slice/languageSlice";
+import { setLanguage } from "@features/Landing/slice/languageSlice";
 
 type LanguageOption = {
   code: "en" | "mm";
   name: string;
   flag: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 };
+
+type Language = "en" | "mm";
+
 
 export const LanguageSwitcher = () => {
   const dispatch = useAppDispatch();
@@ -52,7 +55,7 @@ export const LanguageSwitcher = () => {
         {languages.map((lang) => (
           <MenuItem
             key={lang.code}
-            onClick={() => dispatch(toggleLanguage())}
+            onClick={() => dispatch(setLanguage(lang.code as Language))}
             icon={
               <Box w={5} h={5}>
                 <lang.flag style={{ width: "100%", height: "100%" }} />
