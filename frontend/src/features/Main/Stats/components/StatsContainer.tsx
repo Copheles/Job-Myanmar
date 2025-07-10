@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import { FaBug, FaCalendarCheck, FaSuitcaseRolling } from "react-icons/fa";
 import StatsItem from "./StatsItem";
 import useLanguage from "@hooks/useLanguage";
@@ -26,38 +26,31 @@ export default function StatsContainer({ defaultStats }: Props) {
     {
       title: language.statsPage.pendingHeader,
       count: defaultStats?.pending || 0,
-      icon: <FaSuitcaseRolling size={25} />,
-      color: "#e9b949",
-      bcg: "#fcefc7",
+      icon: <FaSuitcaseRolling />,
+      color: useColorModeValue("yellow.500", "yellow.300"),
+      bcg: useColorModeValue("yellow.100", "yellow.900"),
     },
     {
       title: language.statsPage.interviewHeader,
       count: defaultStats?.interview || 0,
-      icon: <FaCalendarCheck size={25} />,
-      color: "#647acb",
-      bcg: "#fcefc7",
+      icon: <FaCalendarCheck />,
+      color: useColorModeValue("blue.500", "blue.300"),
+      bcg: useColorModeValue("blue.100", "blue.900"),
     },
     {
       title: language.statsPage.jobsDeclinedHeader,
       count: defaultStats?.declined || 0,
-      icon: <FaBug size={25} />,
-      color: "#d66a6a",
-      bcg: "#fcefc7",
+      icon: <FaBug />,
+      color: useColorModeValue("red.500", "red.300"),
+      bcg: useColorModeValue("red.100", "red.900"),
     },
   ];
 
   return (
-    <>
-      <SimpleGrid
-        columns={{ base: 1, xl: 3 }}
-        gap={10}
-        px={{ base: 8, lg: 10 }}
-        py={{ base: 5, lg: 20 }}
-      >
-        {stats.map((item) => {
-          return <StatsItem key={item.title} {...item} />;
-        })}
-      </SimpleGrid>
-    </>
+    <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} mb={8}>
+      {stats.map((item) => (
+        <StatsItem key={item.title} {...item} />
+      ))}
+    </SimpleGrid>
   );
 }

@@ -7,7 +7,7 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
+  Legend,
 } from "recharts";
 
 interface Props {
@@ -25,7 +25,7 @@ export default function ChartsContainer({ monthlyApplication }: Props) {
 
   return (
     <Flex flexDirection="column" alignItems="center">
-      <Heading textAlign="center" mb={7} fontSize={{ base: 17, md: 23}}>
+      <Heading textAlign="center" mb={7} fontSize={{ base: 17, md: 23 }}>
         {language.statsPage.monthlyApplicationsHeader}
       </Heading>
       <ResponsiveContainer width="100%" height={500}>
@@ -33,10 +33,10 @@ export default function ChartsContainer({ monthlyApplication }: Props) {
           data={monthlyApplication}
           margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
           <YAxis />
-          <Tooltip />
+          <Tooltip wrapperStyle={{ width: 100, backgroundColor: "#ccc" }} />
+          <Legend width={100} wrapperStyle={{ top: 40, right: 20, backgroundColor: '#f5f5f5', border: '1px solid #d5d5d5', borderRadius: 3, lineHeight: '30px' }} />
           <Bar dataKey="count" fill={barColor} />
         </BarChart>
       </ResponsiveContainer>

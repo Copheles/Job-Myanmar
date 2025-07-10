@@ -78,7 +78,12 @@
     "pendingHeader": "ဆိုင်းငံ့ထားသောလျှောက်လွှာများ",
     "interviewHeader": "စီစဉ်ထားသောအင်တာဗျူးများ",
     "jobsDeclinedHeader": "ငြင်းပယ်ထားသောအလုပ်များ",
-    "monthlyApplicationsHeader": "လစဉ်လျှောက်လွှာများ"
+    "monthlyApplicationsHeader": "လစဉ်လျှောက်လွှာများ",
+    "averageApplications": "ပျမ်းမျှလျှောက်လွှာများ (လစဉ်)",
+    "peakApplicationMonth": "လျှောက်လွှာအများဆုံးလ",
+    "interviewConversionRate": "အင်တာဗျူးပြောင်းလဲနှုန်း",
+    "applicationStatusDistribution": "လျှောက်လွှာအခြေအနေများ ဖြန့်ဖြူးမှု",
+    "applicationTrendOverTime": "ကာလအလိုက် လျှောက်လွှာအခြေအနေ"
   },
   "searchContainerDropDown": {
     "status": "အခြေအနေ",

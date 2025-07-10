@@ -78,7 +78,12 @@
     "pendingHeader": "Pending applications",
     "interviewHeader": "Interviews scheduled",
     "jobsDeclinedHeader": "Jobs declined",
-    "monthlyApplicationsHeader": "Monthly applications"
+    "monthlyApplicationsHeader": "Monthly applications",
+    "averageApplications": "Average Applications/Month",
+    "peakApplicationMonth": "Peak Application Month",
+    "interviewConversionRate": "Interview Conversion Rateး",
+    "applicationStatusDistribution": "Application Status Distribution",
+    "applicationTrendOverTime": "Application Trend Over Time"
   },
   "searchContainerDropDown": {
     "status": "status",

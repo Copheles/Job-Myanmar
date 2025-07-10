@@ -13,21 +13,51 @@ export default function StatsItem({
   count,
   icon,
   color,
+  bcg,
 }: StatsBox) {
+  const cardBg = useColorModeValue("white", "gray.700");
+  const textColor = useColorModeValue("gray.600", "gray.300");
+
   return (
     <Box
-      p={10}
-      bg={useColorModeValue("gray.100", "RGBA(255, 255, 255, 0.04)")}
-      color={color}
-      borderBottom="5px solid"
-      borderBottomColor={color}
-      h={{ base: "180px", lg: "200px" }}
+      bg={cardBg}
+      p={6}
+      borderRadius="lg"
+      boxShadow="sm"
+      borderLeft="4px solid"
+      borderLeftColor={color}
+      position="relative"
+      overflow="hidden"
+      _before={{
+        content: '""',
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        bg: bcg,
+        opacity: 0.1,
+        zIndex: 0,
+      }}
     >
-      <Flex alignItems="center" justifyContent="space-between" mb={12}>
-        <Heading>{count}</Heading>
-        {icon}
+      <Flex position="relative" zIndex={1} direction="column" gap={2}>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Box p={2} bg={bcg} borderRadius="md" color={color}>
+            {icon}
+          </Box>
+          <Heading size="xl" color={color}>
+            {count}
+          </Heading>
+        </Flex>
+        <Heading
+          fontSize={{ base: 15, md: 20 }}
+          color={textColor}
+          fontWeight="medium"
+          mt={2}
+        >
+          {title}
+        </Heading>
       </Flex>
-      <Heading fontSize={{ base: 13, lg: 18 }}>{title}</Heading>
     </Box>
   );
 }
