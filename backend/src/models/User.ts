@@ -83,7 +83,7 @@ UserSchema.pre<IUser>("remove", async function (next) {
 
 UserSchema.methods.createJWT = function () {
   return jwt.sign({ userId: this._id }, process.env.JWT_SECRET as string, {
-    expiresIn: process.env.JWT_LIFETIME,
+    expiresIn: process.env.JWT_LIFETIME as any,
   });
 };
 

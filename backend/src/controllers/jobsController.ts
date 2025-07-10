@@ -6,10 +6,17 @@ import { checkPermissions } from "../utils/checkPermissions.js";
 import mongoose from "mongoose";
 import moment from "moment";
 import { Request, Response } from "express";
+import ForbiddenRequestError from "../errors/forbidden-request.js";
 
 const createJob = async (req: Request, res: Response) => {
-  const { position, company, jobLocation, jobDescription, aboutCompany, jobType } =
-    req.body;
+  const {
+    position,
+    company,
+    jobLocation,
+    jobDescription,
+    aboutCompany,
+    jobType,
+  } = req.body;
 
   if (
     !position ||
@@ -62,7 +69,7 @@ const getAllJobs = async (req: Request, res: Response) => {
   if (sort === "z-a") {
     result = result.sort("-position");
   }
-  if (!sort || sort === 'all') {
+  if (!sort || sort === "all") {
     result = result.sort("-createdAt");
   }
 
@@ -230,6 +237,11 @@ const showStats = async (req: Request, res: Response) => {
 };
 
 const updateJob = async (req: Request, res: Response) => {
+  // remove this after
+  if (req.user.userId.toString() === "63fdba3ee98cc7a4afd3e8d0") {
+    throw new ForbiddenRequestError("You can't edit the job");
+  }
+
   const { id: jobId } = req.params;
   const { company, position, jobLocation, jobDescription, aboutCompany } =
     req.body;
@@ -281,6 +293,11 @@ const updateJob = async (req: Request, res: Response) => {
 
 const deleteJob = async (req: Request, res: Response) => {
   const { id: jobId } = req.params;
+
+  // remove this after
+  if (req.user.userId.toString() === "63fdba3ee98cc7a4afd3e8d0") {
+    throw new ForbiddenRequestError("You can delete the job");
+  }
 
   const job = await Job.findOne({
     _id: jobId,
