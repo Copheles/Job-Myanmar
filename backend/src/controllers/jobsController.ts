@@ -6,7 +6,6 @@ import { checkPermissions } from "../utils/checkPermissions.js";
 import mongoose from "mongoose";
 import moment from "moment";
 import { Request, Response } from "express";
-import ForbiddenRequestError from "../errors/forbidden-request.js";
 
 const createJob = async (req: Request, res: Response) => {
   const {
@@ -239,7 +238,7 @@ const showStats = async (req: Request, res: Response) => {
 const updateJob = async (req: Request, res: Response) => {
   // remove this after
   if (req.user.userId.toString() === "63fdba3ee98cc7a4afd3e8d0") {
-    throw new ForbiddenRequestError("You can't edit the job");
+    throw new BadRequestError("You can't edit the job");
   }
 
   const { id: jobId } = req.params;
@@ -296,7 +295,7 @@ const deleteJob = async (req: Request, res: Response) => {
 
   // remove this after
   if (req.user.userId.toString() === "63fdba3ee98cc7a4afd3e8d0") {
-    throw new ForbiddenRequestError("You can delete the job");
+    throw new BadRequestError("You can delete the job");
   }
 
   const job = await Job.findOne({

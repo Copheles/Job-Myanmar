@@ -5,7 +5,6 @@ import BadRequestError from "../errors/bad-request.js";
 import UnAuthenticatedError from "../errors/unauthenticated.js";
 import NotFoundError from "../errors/not-found.js";
 import { attacthCookieToResponse } from "../utils/jwt.js";
-import ForbiddenRequestError from "../errors/forbidden-request.js";
 const register = async (req, res) => {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
@@ -65,7 +64,7 @@ const getMe = async (req, res) => {
 const updateUser = async (req, res) => {
     // remove this after
     if (req.user.userId.toString() === "63fdba3ee98cc7a4afd3e8d0") {
-        throw new ForbiddenRequestError("You can't edit the job");
+        throw new BadRequestError("You can't edit the job");
     }
     const { email, name, location } = req.body;
     if (!email || !name || !location) {
@@ -92,7 +91,7 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     // remove this after
     if (req.user.userId.toString() === "63fdba3ee98cc7a4afd3e8d0") {
-        throw new ForbiddenRequestError("You can't delete the account");
+        throw new BadRequestError("You can't delete the account");
     }
     const user = await User.findOne({
         _id: req.user.userId,
@@ -112,7 +111,7 @@ const deleteUser = async (req, res) => {
 const changePassword = async (req, res) => {
     // remove this after
     if (req.user.userId.toString() === "63fdba3ee98cc7a4afd3e8d0") {
-        throw new ForbiddenRequestError("You can't change the password");
+        throw new BadRequestError("You can't change the password");
     }
     const { oldPassword, newPassword } = req.body;
     console.log(req.body);
