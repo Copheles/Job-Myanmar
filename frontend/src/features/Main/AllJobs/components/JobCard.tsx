@@ -63,7 +63,7 @@ export default function JobCard({ job }: { job: any }) {
               size={{ base: "sm", md: "md" }}
             />
             <Box px={{ base: 2, md: 0 }}>
-              <Text fontWeight='medium' fontSize={{ base: 13, md: 16}}>{job.company}</Text>
+              <Text fontWeight='normal' fontSize={{ base: 12, md: 16}}>{job.company}</Text>
             </Box>
           </Flex>
           <Text color={mode("gray.500", "gray.500")} fontSize={{ base: 12, md: 14}}>{fromNow}</Text>

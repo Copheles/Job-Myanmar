@@ -8,7 +8,7 @@ type Props = {
 
 export default function IconDesign({ label, icon }: Props) {
   return (
-    <Flex alignItems="center" gap={{ base: 4, md: 3 }} fontSize={{ base: 12, md: 15}}>
+    <Flex alignItems="center" gap={{ base: 4, md: 3 }} fontSize={{ base: 11, md: 15}}>
       {icon}
       {label}
     </Flex>
