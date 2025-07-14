@@ -18,7 +18,7 @@ interface Props {
 export default function JobsContainer({ sort, status, jobType }: Props) {
   const { page } = useAppSelector((state) => state.jobFilter);
   const { language } = useLanguage();
-  const { data, isFetching, isLoading } = useGetAllJobsQuery({
+  const { data, isFetching } = useGetAllJobsQuery({
     sort,
     status,
     jobType,
