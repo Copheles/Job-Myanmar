@@ -42,7 +42,6 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://job-myanmar.onrender.com/",
-        // target: "http://localhost:5000",
         changeOrigin: true,
       },
     },

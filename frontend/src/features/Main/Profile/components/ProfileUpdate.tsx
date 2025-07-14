@@ -90,8 +90,9 @@ export default function ProfileUpdate() {
             {profile?.user?.name}
           </Heading>
           <Heading
-            fontSize={{ base: "10px" }}
+            fontSize={{ base: 10, lg: 13 }}
             textAlign="center"
+            fontWeight="medium"
             color={mode("gray.500", "gray.500")}
           >
             {language.profilePage.joined} {date}

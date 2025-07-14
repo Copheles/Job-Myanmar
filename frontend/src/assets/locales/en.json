@@ -22,7 +22,8 @@
   "allJobsText": {
     "job": "Job",
     "jobs": "Jobs",
-    "found": "found"
+    "found": "found",
+    "jobsLoading": "Loading Jobs..."
   },
   "singleJobText": {
     "commentLabel": "Comments",

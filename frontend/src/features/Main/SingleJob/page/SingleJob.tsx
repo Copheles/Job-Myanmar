@@ -18,11 +18,13 @@ export default function SingleJob() {
   useEffect(() => {
     if (id) {
       emitEvent("join room", { room: id });
+      console.log('Join job : ', id)
     }
 
     return () => {
       if (id) {
         emitEvent("leave room", { room: id });
+        console.log('Leave job: ',id)
       }
     };
   }, [id]);

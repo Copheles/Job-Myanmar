@@ -22,7 +22,8 @@
   "allJobsText": {
     "job": "အလုပ်",
     "jobs": "အလုပ်များ",
-    "found": "ရှာဖွေတွေ့ရှိ"
+    "found": "ရှာဖွေတွေ့ရှိ",
+    "jobsLoading": "အလုပ်များ ရှာဖွေနေပါသည်...."
   },
   "singleJobText": {
     "commentLabel": "မှတ်ချက်များ",

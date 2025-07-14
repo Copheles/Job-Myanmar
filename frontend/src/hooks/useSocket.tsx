@@ -9,12 +9,12 @@ export const useSocket = () => {
 
   const initializeSocket = () => {
     if (!socketInstance && userInfo) {
-      socketInstance = io("https://job-myanmar.onrender.com", {
+      socketInstance = io(import.meta.env.VITE_SOCKET_URL, {
         query: {
           id: userInfo.id,
         },
       });
-    }
+    } 
 
     return () => {
       if (socketInstance) {

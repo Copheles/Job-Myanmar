@@ -18,7 +18,7 @@ interface Props {
 export default function JobsContainer({ sort, status, jobType }: Props) {
   const { page } = useAppSelector((state) => state.jobFilter);
   const { language } = useLanguage();
-  const { data, isFetching } = useGetAllJobsQuery({
+  const { data, isFetching, isLoading } = useGetAllJobsQuery({
     sort,
     status,
     jobType,
@@ -33,9 +33,19 @@ export default function JobsContainer({ sort, status, jobType }: Props) {
 
   return (
     <>
-      <Heading mb={5} fontSize={{ base: "15px", md: "20px" }}>
-        {data?.totalJobs} {data?.totalJobs === 1 ? language.allJobsText.job : language.allJobsText.jobs} {language.allJobsText.found}
-      </Heading>
+      {isFetching ? (
+        <Heading mb={5} fontSize={{ base: "15px", md: "20px" }}>
+          { language.allJobsText.jobsLoading}
+        </Heading>
+      ) : (
+        <Heading mb={5} fontSize={{ base: "15px", md: "20px" }}>
+          {data?.totalJobs}{" "}
+          {data?.totalJobs === 1
+            ? language.allJobsText.job
+            : language.allJobsText.jobs}{" "}
+          {language.allJobsText.found}
+        </Heading>
+      )}
       <SimpleGrid columns={{ base: 1, lg: 2 }} gap={5}>
         {isFetching
           ? Array.from({ length: 6 }).map((_, idx) => (
